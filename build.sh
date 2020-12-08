@@ -33,6 +33,10 @@ echo "CALLING_URLS=\${CALLING_URLS}"
 if [[ -z \${SAMPLER_TYPE} ]]; then
   SAMPLER_TYPE=dynamic
   echo "Using default sampler type: \${SAMPLER_TYPE}"
+  ./main \
+      --service.name=\${SERVICE_NAME} \
+      --http.route=\${HTTP_ROUTE} \
+      --calling.urls=\${CALLING_URLS}
 else
   echo "SAMPLER_TYPE=\${SAMPLER_TYPE}"
   exec
