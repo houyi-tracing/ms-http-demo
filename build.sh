@@ -26,6 +26,8 @@ RUN_SHELL=run.sh
 cat <<EOF > ${RUN_SHELL}
 #!/bin/sh
 
+CALLING_URLS=$1
+
 echo "SERVICE_NAME=\${SERVICE_NAME}"
 echo "HTTP_ROUTE=\${HTTP_ROUTE}"
 echo "CALLING_URLS=\${CALLING_URLS}"
