@@ -64,7 +64,7 @@ func NewHttpHandler(params *HttpHandlerParams) app.HTTPHandler {
 		grpc.WithStreamInterceptor(grpc_opentracing.StreamClientInterceptor(ret.tracerOpts...)),
 	}
 
-	ret.logger.Debug("urls", zap.Strings("URLs", params.CallingURLs))
+	ret.logger.Info("urls", zap.Strings("URLs", params.CallingURLs))
 	return ret
 }
 
@@ -76,7 +76,7 @@ func (h *httpHandler) handleFunc(
 	router *mux.Router,
 	f func(http.ResponseWriter, *http.Request),
 	route string,
-	args ...interface{}) *mux.Route {
+	_ ...interface{}) *mux.Route {
 	traceMiddleware := nethttp.Middleware(
 		h.tracer,
 		http.HandlerFunc(f),
@@ -86,7 +86,7 @@ func (h *httpHandler) handleFunc(
 	return router.HandleFunc(route, traceMiddleware.ServeHTTP)
 }
 
-func (h *httpHandler) serveHttp(w http.ResponseWriter, r *http.Request) {
+func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("receive request", zap.String("remote address", r.RemoteAddr))
 
 	var wg sync.WaitGroup
