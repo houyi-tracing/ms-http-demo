@@ -25,6 +25,9 @@ CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} go build -tags netgo -o ${BUILD_OUT_DIR}
 RUN_SHELL=run.sh
 cat <<EOF > ${RUN_SHELL}
 #!/bin/sh
+echo "SERVICE_NAME=\${}"
+echo "HTTP_ROUTE=\${HTTP_ROUTE}"
+echo "CALLING_URLS=\${CALLING_URLS}"
 ./main --service-name=\${SERVICE_NAME} --http-route=\${HTTP_ROUTE} --calling-urls=\${CALLING_URLS}
 EOF
 chmod u+x ${RUN_SHELL}
