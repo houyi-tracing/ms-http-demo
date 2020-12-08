@@ -29,7 +29,8 @@ cat <<EOF > ${RUN_SHELL}
 LOG_LEVEL=info
 CALLING_URLS=
 
-for (( i = 1; i <= \$#; i++ )); do
+i=1
+while [ \$i -le \$# ]; do
   if [[ \$i -eq 1 ]]; then
     LOG_LEVEL=\${!i}
   else
@@ -39,6 +40,7 @@ for (( i = 1; i <= \$#; i++ )); do
       CALLING_URLS=\${CALLING_URLS},\${!i}
     fi
   fi
+  i=\$(( i + 1 ))
 done
 
 echo "LOG_LEVEL=\${LOG_LEVEL}"
