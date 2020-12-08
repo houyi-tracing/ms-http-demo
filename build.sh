@@ -40,44 +40,44 @@ else
   "probability")
     if [[ -z \${SAMPLING_RATE} ]]; then
       echo "SAMPLING_RATE must be set for using sampler type: probability"
-      return
+      break
     else
       echo "SAMPLING_RATE=\${SAMPLER_TYPE}"
-      ./main \
+    fi
+    ./main \
         --service.name=\${SERVICE_NAME} \
         --http.route=\${HTTP_ROUTE} \
         --calling.urls=\${CALLING_URLS} \
         --sampler.type=\${SAMPLER_TYPE} \
-        --sampling.rate=\${SAMPLING_RATE} \
-    fi
+        --sampling.rate=\${SAMPLING_RATE}
   ;;
   "const")
     if [[ -z \${ALWAYS_SAMPLE} ]]; then
       echo "ALWAYS_SAMPLE must be set for using sampling type: const"
-      return
+      break
     else
       echo "ALWAYS_SAMPLE=\${ALWAYS_SAMPLE}"
-      ./main \
+    fi
+    ./main \
         --service.name=\${SERVICE_NAME} \
         --http.route=\${HTTP_ROUTE} \
         --calling.urls=\${CALLING_URLS} \
         --sampler.type=\${SAMPLER_TYPE} \
-        --always.sample=\${ALWAYS_SAMPLE} \
-    fi
+        --always.sample=\${ALWAYS_SAMPLE}
   ;;
   "rate-limit")
     if [[ -z \${MAX_TRACES_PER_SECOND} ]]; then
       echo "MAX_TRACES_PER_SECOND must be set for using type: rate-limit"
-      return
+      break
     else
       echo "MAX_TRACES_PER_SECOND=\${MAX_TRACES_PER_SECOND}"
-      ./main \
+    fi
+    ./main \
         --service.name=\${SERVICE_NAME} \
         --http.route=\${HTTP_ROUTE} \
         --calling.urls=\${CALLING_URLS} \
         --sampler.type=\${SAMPLER_TYPE} \
-        --max.traces.per.second=\${MAX_TRACES_PER_SECOND} \
-    fi
+        --max.traces.per.second=\${MAX_TRACES_PER_SECOND}
   ;;
   "dynamic")
     if [[ -n \${AGENT_HOST} ]]; then
