@@ -33,7 +33,7 @@ for (( i = 1; i <= \$#; i++ )); do
   if [[ \$i -eq 1 ]]; then
     LOG_LEVEL=\${!i}
   else
-    CALLING_URLS=\${CALLING_URLS}\${!i}
+    CALLING_URLS=\${CALLING_URLS},\${!i}
   fi
 done
 
