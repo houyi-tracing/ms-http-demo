@@ -44,7 +44,7 @@ else
   "probability")
     if [[ -z \${SAMPLING_RATE} ]]; then
       echo "SAMPLING_RATE must be set for using sampler type: probability"
-      break
+      exit -1
     else
       echo "SAMPLING_RATE=\${SAMPLER_TYPE}"
     fi
@@ -58,7 +58,7 @@ else
   "const")
     if [[ -z \${ALWAYS_SAMPLE} ]]; then
       echo "ALWAYS_SAMPLE must be set for using sampling type: const"
-      break
+      exit -1
     else
       echo "ALWAYS_SAMPLE=\${ALWAYS_SAMPLE}"
     fi
@@ -72,7 +72,7 @@ else
   "rate-limit")
     if [[ -z \${MAX_TRACES_PER_SECOND} ]]; then
       echo "MAX_TRACES_PER_SECOND must be set for using type: rate-limit"
-      break
+      exit -1
     else
       echo "MAX_TRACES_PER_SECOND=\${MAX_TRACES_PER_SECOND}"
     fi
