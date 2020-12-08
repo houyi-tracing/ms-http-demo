@@ -108,7 +108,7 @@ func initConfig() {
 
 		// Search config in home directory with name ".microservice-go-template" (without extension).
 		v.AddConfigPath(home)
-		v.SetConfigName(".microservice-go-template")
+		v.SetConfigName(".ms-http-demo")
 	}
 
 	v.AutomaticEnv() // read in environment variables that match

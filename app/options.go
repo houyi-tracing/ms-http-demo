@@ -21,10 +21,10 @@ import (
 )
 
 const (
-	serveHttpPort = "http-port"
-	serviceName   = "service-name"
-	route         = "http-route"
-	callingURL    = "calling-urls"
+	serveHttpPort = "http.port"
+	serviceName   = "service.name"
+	route         = "http.route"
+	callingURL    = "calling.urls"
 
 	DefaultHttpPort    = ports.ServeHttpPort
 	DefaultRoute       = "/"
