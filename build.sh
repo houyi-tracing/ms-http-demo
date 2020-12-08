@@ -26,18 +26,18 @@ RUN_SHELL=run.sh
 cat <<EOF > ${RUN_SHELL}
 #!/bin/sh
 
-if [[ -n \$1 ]]; then
-  CALLING_URLS=\$(echo \$1)
-else
-  CALLING_URLS=
-fi
+LOG_LEVEL=info
+CALLING_URLS=
 
-if [[ -n \$2 ]]; then
-  LOG_LEVEL=\$2
-else
-  LOG_LEVEL=info
-fi
+for (( i = 1; i <= \$#; i++ )); do
+  if [[ \$i -eq 1 ]]; then
+    LOG_LEVEL=\${!i}
+  else
+    CALLING_URLS=\${CALLING_URLS}\${!i}
+  fi
+done
 
+echo "LOG_LEVEL=\${LOG_LEVEL}"
 echo "SERVICE_NAME=\${SERVICE_NAME}"
 echo "HTTP_ROUTE=\${HTTP_ROUTE}"
 echo "CALLING_URLS=\${CALLING_URLS}"
