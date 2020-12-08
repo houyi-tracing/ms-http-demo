@@ -26,7 +26,7 @@ RUN_SHELL=run.sh
 cat <<EOF > ${RUN_SHELL}
 #!/bin/sh
 
-if [[ -n $1 ]]; then
+if [[ -n \$1 ]]; then
   CALLING_URLS=\$(echo \$1)
 else
   CALLING_URLS=""
