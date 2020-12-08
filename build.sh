@@ -26,7 +26,11 @@ RUN_SHELL=run.sh
 cat <<EOF > ${RUN_SHELL}
 #!/bin/sh
 
-CALLING_URLS=\$1
+if [[ -n $1 ]]; then
+  CALLING_URLS=\$(echo \$1)
+else
+  CALLING_URLS=""
+fi
 
 echo "SERVICE_NAME=\${SERVICE_NAME}"
 echo "HTTP_ROUTE=\${HTTP_ROUTE}"
