@@ -122,6 +122,11 @@ EOF
 chmod u+x ${RUN_SHELL}
 mv ${RUN_SHELL} ${BUILD_OUT_DIR}/
 
+BUILD_DOCKER=build-docker.sh
+cat <<EOF > ${BUILD_DOCKER}
+docker build -t houyitracing/ms-http .
+EOF
+
 cat <<EOF > Dockerfile
 FROM alpine:3.7
 COPY main /opt/ms/
