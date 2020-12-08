@@ -29,7 +29,13 @@ cat <<EOF > ${RUN_SHELL}
 if [[ -n \$1 ]]; then
   CALLING_URLS=\$(echo \$1)
 else
-  CALLING_URLS=""
+  CALLING_URLS=
+fi
+
+if [[ -n \$2 ]]; then
+  LOG_LEVEL=\$2
+else
+  LOG_LEVEL=info
 fi
 
 echo "SERVICE_NAME=\${SERVICE_NAME}"
@@ -73,6 +79,7 @@ case \${SAMPLER_TYPE} in
       --sampler.type=\${SAMPLER_TYPE} \
       --sampling.rate=\${SAMPLING_RATE} \
       --agent.host=\${AGENT_HOST} \
+      --log.level=\${LOG_LEVEL} \
       --agent.grpc.port=\${AGENT_GRPC_PORT} \
       --agent.http.port=\${AGENT_HTTP_PORT}
 ;;
@@ -90,6 +97,7 @@ case \${SAMPLER_TYPE} in
       --sampler.type=\${SAMPLER_TYPE} \
       --always.sample=\${ALWAYS_SAMPLE} \
       --agent.host=\${AGENT_HOST} \
+      --log.level=\${LOG_LEVEL} \
       --agent.grpc.port=\${AGENT_GRPC_PORT} \
       --agent.http.port=\${AGENT_HTTP_PORT}
 ;;
@@ -107,6 +115,7 @@ case \${SAMPLER_TYPE} in
       --sampler.type=\${SAMPLER_TYPE} \
       --max.traces.per.second=\${MAX_TRACES_PER_SECOND} \
       --agent.host=\${AGENT_HOST} \
+      --log.level=\${LOG_LEVEL} \
       --agent.grpc.port=\${AGENT_GRPC_PORT} \
       --agent.http.port=\${AGENT_HTTP_PORT}
 ;;
@@ -117,6 +126,7 @@ case \${SAMPLER_TYPE} in
     --calling.urls=\${CALLING_URLS} \
     --sampler.type=\${SAMPLER_TYPE} \
     --agent.host=\${AGENT_HOST} \
+    --log.level=\${LOG_LEVEL} \
     --agent.grpc.port=\${AGENT_GRPC_PORT} \
     --agent.http.port=\${AGENT_HTTP_PORT}
 ;;

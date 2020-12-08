@@ -23,7 +23,7 @@ import (
 
 const (
 	// logging
-	logLevel        = "log-level"
+	logLevel        = "log.level"
 	defaultLogLevel = "info"
 )
 
