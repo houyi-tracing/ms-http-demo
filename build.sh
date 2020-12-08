@@ -30,13 +30,13 @@ echo "SERVICE_NAME=\${SERVICE_NAME}"
 echo "HTTP_ROUTE=\${HTTP_ROUTE}"
 echo "CALLING_URLS=\${CALLING_URLS}"
 
-if [[ -n \${AGENT_HOST} ]]; then
+if [[ -z \${AGENT_HOST} ]]; then
   AGENT_HOST=localhost
 fi
-if [[ -n \${AGENT_GRPC_PORT} ]]; then
+if [[ -z \${AGENT_GRPC_PORT} ]]; then
   AGENT_GRPC_PORT=6831
 fi
-if [[ -n \${AGENT_HTTP_PORT} ]]; then
+if [[ -z \${AGENT_HTTP_PORT} ]]; then
   AGENT_HTTP_PORT=5778
 fi
 
