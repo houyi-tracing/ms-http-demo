@@ -120,6 +120,7 @@ mv ${RUN_SHELL} ${BUILD_OUT_DIR}/
 
 cat <<EOF > Dockerfile
 FROM alpine:3.7
+COPY main /opt/ms/
 COPY ${RUN_SHELL} /opt/ms/
 EXPOSE 80
 WORKDIR /opt/ms/
