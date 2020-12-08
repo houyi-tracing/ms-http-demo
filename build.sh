@@ -25,7 +25,7 @@ CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} go build -tags netgo -o ${BUILD_OUT_DIR}
 RUN_SHELL=run.sh
 cat <<EOF > ${RUN_SHELL}
 #!/bin/sh
-/opt/ms/main --service-name=\${SERVICE_NAME} --http-route=\${HTTP_ROUTE} --calling-urls=\${CALLING_URLS}
+./main --service-name=\${SERVICE_NAME} --http-route=\${HTTP_ROUTE} --calling-urls=\${CALLING_URLS}
 EOF
 chmod u+x ${RUN_SHELL}
 mv ${RUN_SHELL} ${BUILD_OUT_DIR}/
@@ -34,6 +34,7 @@ cat <<EOF > Dockerfile
 FROM alpine:3.7
 COPY ${RUN_SHELL} /opt/ms/
 EXPOSE 80
+WORKDIR /opt/ms/
 ENTRYPOINT ["/opt/ms/${RUN_SHELL}"]
 EOF
 mv Dockerfile ${BUILD_OUT_DIR}/
