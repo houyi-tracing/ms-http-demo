@@ -30,14 +30,14 @@ LOG_LEVEL=info
 CALLING_URLS=
 
 i=1
-while [ \$i -le \$# ]; do
+for arg in \$@; do
   if [[ \$i -eq 1 ]]; then
-    LOG_LEVEL=\${!i}
+    LOG_LEVEL=\$arg
   else
     if [[ -z \${CALLING_URLS} ]]; then
-      CALLING_URLS=\${!i}
+      CALLING_URLS=\$arg
     else
-      CALLING_URLS=\${CALLING_URLS},\${!i}
+      CALLING_URLS=\${CALLING_URLS},\$arg
     fi
   fi
   i=\$(( i + 1 ))
