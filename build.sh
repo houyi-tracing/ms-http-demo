@@ -43,6 +43,12 @@ else
       return
     else
       echo "SAMPLING_RATE=\${SAMPLER_TYPE}"
+      ./main \
+        --service.name=\${SERVICE_NAME} \
+        --http.route=\${HTTP_ROUTE} \
+        --calling.urls=\${CALLING_URLS} \
+        --sampler.type=\${SAMPLER_TYPE} \
+        --sampling.rate=\${SAMPLING_RATE} \
     fi
   ;;
   "const")
@@ -51,6 +57,12 @@ else
       return
     else
       echo "ALWAYS_SAMPLE=\${ALWAYS_SAMPLE}"
+      ./main \
+        --service.name=\${SERVICE_NAME} \
+        --http.route=\${HTTP_ROUTE} \
+        --calling.urls=\${CALLING_URLS} \
+        --sampler.type=\${SAMPLER_TYPE} \
+        --always.sample=\${ALWAYS_SAMPLE} \
     fi
   ;;
   "rate-limit")
@@ -59,6 +71,12 @@ else
       return
     else
       echo "MAX_TRACES_PER_SECOND=\${MAX_TRACES_PER_SECOND}"
+      ./main \
+        --service.name=\${SERVICE_NAME} \
+        --http.route=\${HTTP_ROUTE} \
+        --calling.urls=\${CALLING_URLS} \
+        --sampler.type=\${SAMPLER_TYPE} \
+        --max.traces.per.second=\${MAX_TRACES_PER_SECOND} \
     fi
   ;;
   "dynamic")
@@ -78,21 +96,20 @@ else
     echo "AGENT_HOST=\${AGENT_HOST}"
     echo "AGENT_GRPC_PORT=\${AGENT_GRPC_PORT}"
     echo "AGENT_HTTP_PORT=\${AGENT_HTTP_PORT}"
+
+    ./main \
+      --service.name=\${SERVICE_NAME} \
+      --http.route=\${HTTP_ROUTE} \
+      --calling.urls=\${CALLING_URLS} \
+      --sampler.type=\${SAMPLER_TYPE} \
+      --agent.host=\${AGENT_HOST} \
+      --agent.grpc.port=\${AGENT_GRPC_PORT} \
+      --agent.http.port=\${AGENT_HTTP_PORT}
   ;;
   *)
     echo "Unsupported sampler type"
   esac
 fi
-
-./main \
-  --service.name=\${SERVICE_NAME} \
-  --http.route=\${HTTP_ROUTE} \
-  --calling.urls=\${CALLING_URLS} \
-  --sampler.type=\${SAMPLER_TYPE} \
-  --sampling.rate=\${SAMPLING_RATE} \
-  --always.sample=\${ALWAYS_SAMPLE} \
-  --max.traces.per.second=\${MAX_TRACES_PER_SECOND} \
-  --agent.host=\${AGENT_HOST}
 EOF
 chmod u+x ${RUN_SHELL}
 mv ${RUN_SHELL} ${BUILD_OUT_DIR}/
