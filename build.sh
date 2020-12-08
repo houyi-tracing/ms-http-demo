@@ -126,6 +126,7 @@ BUILD_DOCKER=build-docker.sh
 cat <<EOF > ${BUILD_DOCKER}
 docker build -t houyitracing/ms-http .
 EOF
+mv ${BUILD_DOCKER} ${BUILD_OUT_DIR}/
 
 cat <<EOF > Dockerfile
 FROM alpine:3.7
