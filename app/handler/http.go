@@ -91,8 +91,10 @@ func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 
 	var wg sync.WaitGroup
 	for _, URL := range h.callingURLs {
-		wg.Add(1)
-		h.mockHttpRequest(r.Context(), URL, &wg)
+		if len(URL) != 0 {
+			wg.Add(1)
+			h.mockHttpRequest(r.Context(), URL, &wg)
+		}
 	}
 	wg.Wait()
 }
