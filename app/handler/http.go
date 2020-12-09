@@ -15,7 +15,6 @@
 package handler
 
 import (
-	"context"
 	"github.com/gorilla/mux"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/jaegertracing/jaeger/cmd/query/app"
@@ -93,25 +92,16 @@ func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 	for _, URL := range h.callingURLs {
 		if len(URL) != 0 {
 			wg.Add(1)
-			h.mockHttpRequest(r.Context(), URL, &wg)
+			h.mockHttpRequest(URL, &wg)
 		}
 	}
 	wg.Wait()
 }
 
-func (h *httpHandler) mockHttpRequest(ctx context.Context, URL string, wg *sync.WaitGroup) {
+func (h *httpHandler) mockHttpRequest(URL string, wg *sync.WaitGroup) {
 	defer wg.Done()
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, URL, nil)
-	if err != nil {
-		h.logger.Error("failed to generate new request",
-			zap.String("URL", URL),
-			zap.Error(err))
-		return
-	}
-
-	c := http.DefaultClient
-	resp, err := c.Do(req)
+	resp, err := http.Get(URL)
 	if err != nil {
 		h.logger.Error("failed to get response",
 			zap.String("URL", URL),
