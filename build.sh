@@ -32,12 +32,12 @@ CALLING_URLS=
 i=1
 for arg in \$@; do
   if [[ \$i -eq 1 ]]; then
-    LOG_LEVEL=\$arg
+    LOG_LEVEL="\$(eval echo \$arg)"
   else
     if [[ -z \${CALLING_URLS} ]]; then
-      CALLING_URLS=\$arg
+      CALLING_URLS="\$(eval echo \$arg)"
     else
-      CALLING_URLS=\${CALLING_URLS},\$arg
+      CALLING_URLS="\${CALLING_URLS},\$(eval echo \$arg)"
     fi
   fi
   i=\$(( i + 1 ))
