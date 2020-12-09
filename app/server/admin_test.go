@@ -17,7 +17,7 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/houyi-tracing/ms-aggr/pkg/hc"
+	"github.com/houyi-tracing/ms-http-demo/pkg/hc"
 	"github.com/magiconair/properties/assert"
 	"io/ioutil"
 	"log"

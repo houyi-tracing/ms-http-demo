@@ -21,8 +21,6 @@ import (
 	"github.com/opentracing-contrib/go-stdlib/nethttp"
 	"github.com/opentracing/opentracing-go"
 	"go.uber.org/zap"
-	"google.golang.org/grpc"
-	"io/ioutil"
 	"net/http"
 	"sync"
 )
@@ -32,9 +30,9 @@ type httpHandler struct {
 	tracer       opentracing.Tracer
 	route        string
 	grpcHostPort string
+	httpClient   *http.Client
 	callingURLs  []string
 	tracerOpts   []grpc_opentracing.Option
-	clientOpts   []grpc.DialOption
 }
 
 type HttpHandlerParams struct {
@@ -52,15 +50,12 @@ func NewHttpHandler(params *HttpHandlerParams) app.HTTPHandler {
 		tracer:       params.Tracer,
 		grpcHostPort: params.GRPCHostPort,
 		callingURLs:  params.CallingURLs,
+		httpClient: &http.Client{
+			Transport: &nethttp.Transport{},
+		},
 	}
 	ret.tracerOpts = []grpc_opentracing.Option{
 		grpc_opentracing.WithTracer(ret.tracer),
-	}
-	ret.clientOpts = []grpc.DialOption{
-		grpc.WithInsecure(),
-		grpc.WithBlock(),
-		grpc.WithUnaryInterceptor(grpc_opentracing.UnaryClientInterceptor(ret.tracerOpts...)),
-		grpc.WithStreamInterceptor(grpc_opentracing.StreamClientInterceptor(ret.tracerOpts...)),
 	}
 
 	ret.logger.Info("urls", zap.Strings("URLs", params.CallingURLs))
@@ -92,27 +87,33 @@ func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 	for _, URL := range h.callingURLs {
 		if len(URL) != 0 {
 			wg.Add(1)
-			h.mockHttpRequest(URL, &wg)
+			if err := h.mockHttpRequest(r, URL, &wg); err != nil {
+				h.logger.Error("failed to get response", zap.Error(err))
+			}
 		}
 	}
 	wg.Wait()
 }
 
-func (h *httpHandler) mockHttpRequest(URL string, wg *sync.WaitGroup) {
+func (h *httpHandler) mockHttpRequest(r *http.Request, URL string, wg *sync.WaitGroup) error {
 	defer wg.Done()
 
-	resp, err := http.Get(URL)
+	req, err := http.NewRequest(http.MethodGet, URL, nil)
 	if err != nil {
-		h.logger.Error("failed to get response",
-			zap.String("URL", URL),
-			zap.Error(err))
+		return err
 	}
-	if resp != nil && resp.Body != nil {
-		content, _ := ioutil.ReadAll(resp.Body)
-		h.logger.Debug("get response",
-			zap.String("URL", URL),
-			zap.Int("status_code", resp.StatusCode),
-			zap.String("content", string(content)))
-		_ = resp.Body.Close()
+
+	req = req.WithContext(r.Context())
+	req, ht := nethttp.TraceRequest(h.tracer, req, nethttp.OperationName(h.route))
+
+	resp, err := h.httpClient.Do(req)
+	if err != nil {
+		return err
 	}
+	h.logger.Debug("get response",
+		zap.String("URL", URL),
+		zap.Int("status_code", resp.StatusCode))
+
+	ht.Finish()
+	return nil
 }
