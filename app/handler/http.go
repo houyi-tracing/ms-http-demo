@@ -15,14 +15,17 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/gorilla/mux"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/jaegertracing/jaeger/cmd/query/app"
 	"github.com/opentracing-contrib/go-stdlib/nethttp"
 	"github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go/ext"
 	"go.uber.org/zap"
 	"net/http"
 	"sync"
+	"time"
 )
 
 type httpHandler struct {
@@ -63,7 +66,8 @@ func NewHttpHandler(params *HttpHandlerParams) app.HTTPHandler {
 }
 
 func (h *httpHandler) RegisterRoutes(router *mux.Router) {
-	h.handleFunc(router, h.serveHttp, h.route).Methods(http.MethodGet)
+	router.HandleFunc(h.route, h.serveHttp).Methods(http.MethodGet)
+	//h.handleFunc(router, h.serveHttp, h.route).Methods(http.MethodGet)
 }
 
 func (h *httpHandler) handleFunc(
@@ -83,11 +87,15 @@ func (h *httpHandler) handleFunc(
 func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 	h.logger.Debug("receive request", zap.String("remote address", r.RemoteAddr))
 
+	spanCtx, _ := h.tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(r.Header))
+	span := h.tracer.StartSpan(h.route, opentracing.StartTime(time.Now()), ext.RPCServerOption(spanCtx))
+	defer span.Finish()
+
 	var wg sync.WaitGroup
 	for _, URL := range h.callingURLs {
 		if len(URL) != 0 {
 			wg.Add(1)
-			if err := h.mockHttpRequest(r, URL, &wg); err != nil {
+			if err := h.mockHttpRequest(span.Context(), URL, &wg); err != nil {
 				h.logger.Error("failed to get response", zap.Error(err))
 			}
 		}
@@ -95,7 +103,7 @@ func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 	wg.Wait()
 }
 
-func (h *httpHandler) mockHttpRequest(r *http.Request, URL string, wg *sync.WaitGroup) error {
+func (h *httpHandler) mockHttpRequest(spanCtx opentracing.SpanContext, URL string, wg *sync.WaitGroup) error {
 	defer wg.Done()
 
 	req, err := http.NewRequest(http.MethodGet, URL, nil)
@@ -103,17 +111,35 @@ func (h *httpHandler) mockHttpRequest(r *http.Request, URL string, wg *sync.Wait
 		return err
 	}
 
-	req = req.WithContext(r.Context())
-	req, ht := nethttp.TraceRequest(h.tracer, req, nethttp.OperationName(h.route))
+	span := h.tracer.StartSpan(fmt.Sprintf("call-%s", URL),
+		opentracing.Tags{
+			"user_agent": req.UserAgent(),
+		},
+		opentracing.FollowsFrom(spanCtx))
+	defer span.Finish()
 
+	// Set some tags on the clientSpan to annotate that it's the client span. The additional HTTP tags are useful for debugging purposes.
+	ext.SpanKindRPCClient.Set(span)
+	ext.HTTPUrl.Set(span, URL)
+	ext.HTTPMethod.Set(span, http.MethodGet)
+
+	if err := h.tracer.Inject(span.Context(), opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(req.Header)); err != nil {
+		return err
+	}
 	resp, err := h.httpClient.Do(req)
 	if err != nil {
 		return err
 	}
+	defer resp.Body.Close()
+
+	ext.HTTPStatusCode.Set(span, uint16(resp.StatusCode))
+	if resp.StatusCode != http.StatusOK {
+		ext.Error.Set(span, true)
+	}
+
 	h.logger.Debug("get response",
 		zap.String("URL", URL),
 		zap.Int("status_code", resp.StatusCode))
 
-	ht.Finish()
 	return nil
 }
