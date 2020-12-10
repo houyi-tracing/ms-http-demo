@@ -55,7 +55,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug" ]
+          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-tree-e"
@@ -113,7 +113,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug" ]
+          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-tree-d"
@@ -171,7 +171,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug" ]
+          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-tree-c"
@@ -229,7 +229,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug", "http://${MS_TREE_C_SERVICE_HOST}:${MS_TREE_C_SERVICE_PORT}/api/do", "http://${MS_TREE_D_SERVICE_HOST}:${MS_TREE_D_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_TREE_C_SERVICE_HOST}:${MS_TREE_C_SERVICE_PORT}/api/do", "http://${MS_TREE_D_SERVICE_HOST}:${MS_TREE_D_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
               value: "ms-tree-b"
@@ -287,7 +287,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug", "http://${MS_TREE_B_SERVICE_HOST}:${MS_TREE_B_SERVICE_PORT}/api/do", "http://${MS_TREE_E_SERVICE_HOST}:${MS_TREE_E_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_TREE_B_SERVICE_HOST}:${MS_TREE_B_SERVICE_PORT}/api/do", "http://${MS_TREE_E_SERVICE_HOST}:${MS_TREE_E_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
               value: "ms-tree-a"
@@ -345,7 +345,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug", "http://${MS_TREE_A_SERVICE_HOST}:${MS_TREE_A_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_TREE_A_SERVICE_HOST}:${MS_TREE_A_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
               value: "ms-tree-frontend"

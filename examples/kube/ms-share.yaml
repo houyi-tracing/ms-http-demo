@@ -55,7 +55,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug" ]
+          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-d"
@@ -113,7 +113,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug", "http://${MS_SHARE_D_SERVICE_HOST}:${MS_SHARE_D_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_SHARE_D_SERVICE_HOST}:${MS_SHARE_D_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-c"
@@ -171,7 +171,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug" ]
+          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-b"
@@ -229,7 +229,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug", "http://${MS_SHARE_B_SERVICE_HOST}:${MS_SHARE_B_SERVICE_PORT}/api/do", "http://${MS_SHARE_C_SERVICE_HOST}:${MS_SHARE_C_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_SHARE_B_SERVICE_HOST}:${MS_SHARE_B_SERVICE_PORT}/api/do", "http://${MS_SHARE_C_SERVICE_HOST}:${MS_SHARE_C_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-a"
@@ -287,7 +287,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug", "http://${MS_SHARE_A_SERVICE_HOST}:${MS_SHARE_A_SERVICE_PORT}/api/do", "http://${MS_SHARE_C_SERVICE_HOST}:${MS_SHARE_C_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_SHARE_A_SERVICE_HOST}:${MS_SHARE_A_SERVICE_PORT}/api/do", "http://${MS_SHARE_C_SERVICE_HOST}:${MS_SHARE_C_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-frontend"

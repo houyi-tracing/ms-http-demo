@@ -55,7 +55,7 @@ spec:
       - name: ms-http
         image: houyitracing/ms-http
         imagePullPolicy: IfNotPresent
-        args: ["debug"]
+        args: ["info"]
         env:
         - name: SERVICE_NAME
           value: "ms-chain-c"
@@ -113,7 +113,7 @@ spec:
       - name: ms-http
         image: houyitracing/ms-http
         imagePullPolicy: IfNotPresent
-        args: ["debug", "http://${MS_CHAIN_C_SERVICE_HOST}:${MS_CHAIN_C_SERVICE_PORT}/api/do"]
+        args: ["info", "http://${MS_CHAIN_C_SERVICE_HOST}:${MS_CHAIN_C_SERVICE_PORT}/api/do"]
         env:
         - name: SERVICE_NAME
           value: "ms-chain-b"
@@ -171,7 +171,7 @@ spec:
       - name: ms-http
         image: houyitracing/ms-http
         imagePullPolicy: IfNotPresent
-        args: ["debug", "http://${MS_CHAIN_B_SERVICE_HOST}:${MS_CHAIN_B_SERVICE_PORT}/api/do"]
+        args: ["info", "http://${MS_CHAIN_B_SERVICE_HOST}:${MS_CHAIN_B_SERVICE_PORT}/api/do"]
         env:
         - name: SERVICE_NAME
           value: "ms-chain-a"
@@ -229,7 +229,7 @@ spec:
       - name: ms-http
         image: houyitracing/ms-http
         imagePullPolicy: IfNotPresent
-        args: ["debug", "http://${MS_CHAIN_A_SERVICE_HOST}:${MS_CHAIN_A_SERVICE_PORT}/api/do"]
+        args: ["info", "http://${MS_CHAIN_A_SERVICE_HOST}:${MS_CHAIN_A_SERVICE_PORT}/api/do"]
         env:
         - name: SERVICE_NAME
           value: "ms-chain-frontend"

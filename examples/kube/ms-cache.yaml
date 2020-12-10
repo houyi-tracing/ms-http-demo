@@ -56,7 +56,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug" ]
+          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-cdb-db"
@@ -114,7 +114,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug", "http://${MS_CDB_DB_SERVICE_HOST}:${MS_CDB_DB_SERVICE_PORT}/api/database" ]
+          args: [ "info", "http://${MS_CDB_DB_SERVICE_HOST}:${MS_CDB_DB_SERVICE_PORT}/api/database" ]
           env:
             - name: SERVICE_NAME
               value: "ms-cdb-d"
@@ -172,7 +172,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug", "http://${MS_CDB_DB_SERVICE_HOST}:${MS_CDB_DB_SERVICE_PORT}/api/database" ]
+          args: [ "info", "http://${MS_CDB_DB_SERVICE_HOST}:${MS_CDB_DB_SERVICE_PORT}/api/database" ]
           env:
             - name: SERVICE_NAME
               value: "ms-cdb-c"
@@ -346,7 +346,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug", "http://${MS_CDB_A_SERVICE_HOST}:${MS_CDB_A_SERVICE_PORT}/api/do", "http://${MS_CDB_B_SERVICE_HOST}:${MS_CDB_B_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_CDB_A_SERVICE_HOST}:${MS_CDB_A_SERVICE_PORT}/api/do", "http://${MS_CDB_B_SERVICE_HOST}:${MS_CDB_B_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
               value: "ms-cdb-frontend"

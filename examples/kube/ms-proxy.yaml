@@ -52,7 +52,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug" ]
+          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-proxy-a"
@@ -108,7 +108,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug" ]
+          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-proxy-b"
@@ -164,7 +164,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug" ]
+          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-proxy-c"
@@ -219,7 +219,7 @@ spec:
             - containerPort: 14271
         - name: ms-http
           image: houyitracing/ms-http
-          args: [ "debug", "http://${MS_PROXY_A_SERVICE_HOST}:${MS_PROXY_A_SERVICE_PORT}/api/do", "http://${MS_PROXY_B_SERVICE_HOST}:${MS_PROXY_B_SERVICE_PORT}/api/do", "http://${MS_PROXY_C_SERVICE_HOST}:${MS_PROXY_C_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_PROXY_A_SERVICE_HOST}:${MS_PROXY_A_SERVICE_PORT}/api/do", "http://${MS_PROXY_B_SERVICE_HOST}:${MS_PROXY_B_SERVICE_PORT}/api/do", "http://${MS_PROXY_C_SERVICE_HOST}:${MS_PROXY_C_SERVICE_PORT}/api/do" ]
           imagePullPolicy: IfNotPresent
           env:
             - name: SERVICE_NAME

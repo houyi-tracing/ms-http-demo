@@ -55,7 +55,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug" ]
+          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-branch-d"
@@ -113,7 +113,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug", "http://${MS_BRANCH_D_SERVICE_HOST}:${MS_BRANCH_D_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_BRANCH_D_SERVICE_HOST}:${MS_BRANCH_D_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
               value: "ms-branch-c"
@@ -171,7 +171,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug" ]
+          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-branch-b"
@@ -229,7 +229,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug", "http://${MS_BRANCH_B_SERVICE_HOST}:${MS_BRANCH_B_SERVICE_PORT}/api/do", "http://${MS_BRANCH_C_SERVICE_HOST}:${MS_BRANCH_C_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_BRANCH_B_SERVICE_HOST}:${MS_BRANCH_B_SERVICE_PORT}/api/do", "http://${MS_BRANCH_C_SERVICE_HOST}:${MS_BRANCH_C_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
               value: "ms-branch-a"
@@ -287,7 +287,7 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "debug", "http://${MS_BRANCH_A_SERVICE_HOST}:${MS_BRANCH_A_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_BRANCH_A_SERVICE_HOST}:${MS_BRANCH_A_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
               value: "ms-branch-frontend"
