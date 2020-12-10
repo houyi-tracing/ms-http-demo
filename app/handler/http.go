@@ -115,7 +115,7 @@ func (h *httpHandler) mockHttpRequest(spanCtx opentracing.SpanContext, URL strin
 		opentracing.Tags{
 			"user_agent": req.UserAgent(),
 		},
-		opentracing.FollowsFrom(spanCtx))
+		opentracing.ChildOf(spanCtx))
 	defer span.Finish()
 
 	// Set some tags on the clientSpan to annotate that it's the client span. The additional HTTP tags are useful for debugging purposes.
@@ -133,7 +133,7 @@ func (h *httpHandler) mockHttpRequest(spanCtx opentracing.SpanContext, URL strin
 	defer resp.Body.Close()
 
 	ext.HTTPStatusCode.Set(span, uint16(resp.StatusCode))
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode >= 400 {
 		ext.Error.Set(span, true)
 	}
 
