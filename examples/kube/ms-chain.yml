@@ -1,0 +1,240 @@
+# service account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ms-chain
+  labels:
+    account: ms-chain
+---
+
+# service C
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-chain-c
+  labels:
+    app: ms-chain-c
+    service: ms-chain-c
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: ms-chain-c
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-chain-c
+  labels:
+    app: ms-chain-c
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: ms-chain-c
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-chain-c
+        version: v1
+    spec:
+      serviceAccountName: ms-chain
+      containers:
+      - name: houyi-agent
+        image: houyitracing/houyi-agent
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5775
+        - containerPort: 5778
+        - containerPort: 6831
+        - containerPort: 6832
+        - containerPort: 14271
+      - name: ms-http
+        image: houyitracing/ms-http
+        imagePullPolicy: Always
+        args: ["debug"]
+        env:
+        - name: SERVICE_NAME
+          value: "ms-chain-c"
+        - name: HTTP_ROUTE
+          value: "/api/do"
+        ports:
+        - containerPort: 80
+---
+
+# service B
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-chain-b
+  labels:
+    app: ms-chain-b
+    service: ms-chain-b
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: ms-chain-b
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-chain-b
+  labels:
+    app: ms-chain-b
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: ms-chain-b
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-chain-b
+        version: v1
+    spec:
+      serviceAccountName: ms-chain
+      containers:
+      - name: houyi-agent
+        image: houyitracing/houyi-agent
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5775
+        - containerPort: 5778
+        - containerPort: 6831
+        - containerPort: 6832
+        - containerPort: 14271
+      - name: ms-http
+        image: houyitracing/ms-http
+        imagePullPolicy: Always
+        args: ["debug", "http://${MS_CHAIN_C_SERVICE_HOST}:${MS_CHAIN_C_SERVICE_PORT}/api/do"]
+        env:
+        - name: SERVICE_NAME
+          value: "ms-chain-b"
+        - name: HTTP_ROUTE
+          value: "/api/do"
+        ports:
+        - containerPort: 80
+---
+
+# service A
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-chain-a
+  labels:
+    app: ms-chain-a
+    service: ms-chain-a
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: ms-chain-a
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-chain-a
+  labels:
+    app: ms-chain-a
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: ms-chain-a
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-chain-a
+        version: v1
+    spec:
+      serviceAccountName: ms-chain
+      containers:
+      - name: houyi-agent
+        image: houyitracing/houyi-agent
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5775
+        - containerPort: 5778
+        - containerPort: 6831
+        - containerPort: 6832
+        - containerPort: 14271
+      - name: ms-http
+        image: houyitracing/ms-http
+        imagePullPolicy: Always
+        args: ["debug", "http://${MS_CHAIN_B_SERVICE_HOST}:${MS_CHAIN_B_SERVICE_PORT}/api/do"]
+        env:
+        - name: SERVICE_NAME
+          value: "ms-chain-a"
+        - name: HTTP_ROUTE
+          value: "/api/do"
+        ports:
+        - containerPort: 80
+---
+
+# frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-chain-frontend
+  labels:
+    app: ms-chain-frontend
+    service: ms-chain-frontend
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: ms-chain-frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-chain-frontend
+  labels:
+    app: ms-chain-frontend
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: ms-chain-frontend
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-chain-frontend
+        version: v1
+    spec:
+      serviceAccountName: ms-chain
+      containers:
+      - name: houyi-agent
+        image: houyitracing/houyi-agent
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5775
+        - containerPort: 5778
+        - containerPort: 6831
+        - containerPort: 6832
+        - containerPort: 14271
+      - name: ms-http
+        image: houyitracing/ms-http
+        imagePullPolicy: Always
+        args: ["debug", "http://${MS_CHAIN_A_SERVICE_HOST}:${MS_CHAIN_A_SERVICE_PORT}/api/do"]
+        env:
+        - name: SERVICE_NAME
+          value: "ms-chain-frontend"
+        - name: HTTP_ROUTE
+          value: "/api/frontend"
+        ports:
+        - containerPort: 80
+---
