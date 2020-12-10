@@ -45,7 +45,7 @@ spec:
       containers:
       - name: houyi-agent
         image: houyitracing/houyi-agent
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5775
         - containerPort: 5778
@@ -54,7 +54,7 @@ spec:
         - containerPort: 14271
       - name: ms-http
         image: houyitracing/ms-http
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         args: ["debug"]
         env:
         - name: SERVICE_NAME
@@ -103,7 +103,7 @@ spec:
       containers:
       - name: houyi-agent
         image: houyitracing/houyi-agent
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5775
         - containerPort: 5778
@@ -112,7 +112,7 @@ spec:
         - containerPort: 14271
       - name: ms-http
         image: houyitracing/ms-http
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         args: ["debug", "http://${MS_CHAIN_C_SERVICE_HOST}:${MS_CHAIN_C_SERVICE_PORT}/api/do"]
         env:
         - name: SERVICE_NAME
@@ -161,7 +161,7 @@ spec:
       containers:
       - name: houyi-agent
         image: houyitracing/houyi-agent
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5775
         - containerPort: 5778
@@ -170,7 +170,7 @@ spec:
         - containerPort: 14271
       - name: ms-http
         image: houyitracing/ms-http
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         args: ["debug", "http://${MS_CHAIN_B_SERVICE_HOST}:${MS_CHAIN_B_SERVICE_PORT}/api/do"]
         env:
         - name: SERVICE_NAME
@@ -219,7 +219,7 @@ spec:
       containers:
       - name: houyi-agent
         image: houyitracing/houyi-agent
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5775
         - containerPort: 5778
@@ -228,7 +228,7 @@ spec:
         - containerPort: 14271
       - name: ms-http
         image: houyitracing/ms-http
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         args: ["debug", "http://${MS_CHAIN_A_SERVICE_HOST}:${MS_CHAIN_A_SERVICE_PORT}/api/do"]
         env:
         - name: SERVICE_NAME

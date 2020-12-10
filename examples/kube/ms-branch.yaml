@@ -17,8 +17,8 @@ metadata:
     service: ms-branch-d
 spec:
   ports:
-  - port: 80
-    name: http
+    - port: 80
+      name: http
   selector:
     app: ms-branch-d
 ---
@@ -43,26 +43,26 @@ spec:
     spec:
       serviceAccountName: ms-branch
       containers:
-      - name: houyi-agent
-        image: houyitracing/houyi-agent
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 5775
-        - containerPort: 5778
-        - containerPort: 6831
-        - containerPort: 6832
-        - containerPort: 14271
-      - name: ms-http
-        image: houyitracing/ms-http
-        imagePullPolicy: Always
-        args: ["debug"]
-        env:
-        - name: SERVICE_NAME
-          value: "ms-branch-d"
-        - name: HTTP_ROUTE
-          value: "/api/do"
-        ports:
-        - containerPort: 80
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "debug" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-branch-d"
+            - name: HTTP_ROUTE
+              value: "/api/do"
+          ports:
+            - containerPort: 80
 ---
 
 # service C
@@ -75,8 +75,8 @@ metadata:
     service: ms-branch-c
 spec:
   ports:
-  - port: 80
-    name: http
+    - port: 80
+      name: http
   selector:
     app: ms-branch-c
 ---
@@ -101,26 +101,26 @@ spec:
     spec:
       serviceAccountName: ms-branch
       containers:
-      - name: houyi-agent
-        image: houyitracing/houyi-agent
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 5775
-        - containerPort: 5778
-        - containerPort: 6831
-        - containerPort: 6832
-        - containerPort: 14271
-      - name: ms-http
-        image: houyitracing/ms-http
-        imagePullPolicy: Always
-        args: ["debug", "http://${MS_BRANCH_D_SERVICE_HOST}:${MS_BRANCH_D_SERVICE_PORT}/api/do"]
-        env:
-        - name: SERVICE_NAME
-          value: "ms-branch-c"
-        - name: HTTP_ROUTE
-          value: "/api/do"
-        ports:
-        - containerPort: 80
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "debug", "http://${MS_BRANCH_D_SERVICE_HOST}:${MS_BRANCH_D_SERVICE_PORT}/api/do" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-branch-c"
+            - name: HTTP_ROUTE
+              value: "/api/do"
+          ports:
+            - containerPort: 80
 ---
 
 # service B
@@ -133,8 +133,8 @@ metadata:
     service: ms-branch-b
 spec:
   ports:
-  - port: 80
-    name: http
+    - port: 80
+      name: http
   selector:
     app: ms-branch-b
 ---
@@ -159,26 +159,26 @@ spec:
     spec:
       serviceAccountName: ms-branch
       containers:
-      - name: houyi-agent
-        image: houyitracing/houyi-agent
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 5775
-        - containerPort: 5778
-        - containerPort: 6831
-        - containerPort: 6832
-        - containerPort: 14271
-      - name: ms-http
-        image: houyitracing/ms-http
-        imagePullPolicy: Always
-        args: ["debug"]
-        env:
-        - name: SERVICE_NAME
-          value: "ms-branch-b"
-        - name: HTTP_ROUTE
-          value: "/api/do"
-        ports:
-        - containerPort: 80
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "debug" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-branch-b"
+            - name: HTTP_ROUTE
+              value: "/api/do"
+          ports:
+            - containerPort: 80
 ---
 
 # service A
@@ -191,8 +191,8 @@ metadata:
     service: ms-branch-a
 spec:
   ports:
-  - port: 80
-    name: http
+    - port: 80
+      name: http
   selector:
     app: ms-branch-a
 ---
@@ -217,26 +217,26 @@ spec:
     spec:
       serviceAccountName: ms-branch
       containers:
-      - name: houyi-agent
-        image: houyitracing/houyi-agent
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 5775
-        - containerPort: 5778
-        - containerPort: 6831
-        - containerPort: 6832
-        - containerPort: 14271
-      - name: ms-http
-        image: houyitracing/ms-http
-        imagePullPolicy: Always
-        args: ["debug", "http://${MS_BRANCH_B_SERVICE_HOST}:${MS_BRANCH_B_SERVICE_PORT}/api/do", "http://${MS_BRANCH_C_SERVICE_HOST}:${MS_BRANCH_C_SERVICE_PORT}/api/do"]
-        env:
-        - name: SERVICE_NAME
-          value: "ms-branch-a"
-        - name: HTTP_ROUTE
-          value: "/api/do"
-        ports:
-        - containerPort: 80
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "debug", "http://${MS_BRANCH_B_SERVICE_HOST}:${MS_BRANCH_B_SERVICE_PORT}/api/do", "http://${MS_BRANCH_C_SERVICE_HOST}:${MS_BRANCH_C_SERVICE_PORT}/api/do" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-branch-a"
+            - name: HTTP_ROUTE
+              value: "/api/do"
+          ports:
+            - containerPort: 80
 ---
 
 # frontend
@@ -249,8 +249,8 @@ metadata:
     service: ms-branch-frontend
 spec:
   ports:
-  - port: 80
-    name: http
+    - port: 80
+      name: http
   selector:
     app: ms-branch-frontend
 ---
@@ -275,24 +275,24 @@ spec:
     spec:
       serviceAccountName: ms-branch
       containers:
-      - name: houyi-agent
-        image: houyitracing/houyi-agent
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 5775
-        - containerPort: 5778
-        - containerPort: 6831
-        - containerPort: 6832
-        - containerPort: 14271
-      - name: ms-http
-        image: houyitracing/ms-http
-        imagePullPolicy: Always
-        args: ["debug", "http://${MS_BRANCH_A_SERVICE_HOST}:${MS_BRANCH_A_SERVICE_PORT}/api/do"]
-        env:
-        - name: SERVICE_NAME
-          value: "ms-branch-frontend"
-        - name: HTTP_ROUTE
-          value: "/api/frontend"
-        ports:
-        - containerPort: 80
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "debug", "http://${MS_BRANCH_A_SERVICE_HOST}:${MS_BRANCH_A_SERVICE_PORT}/api/do" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-branch-frontend"
+            - name: HTTP_ROUTE
+              value: "/api/frontend"
+          ports:
+            - containerPort: 80
 ---
