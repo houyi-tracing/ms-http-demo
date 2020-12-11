@@ -1,47 +1,48 @@
+# cdb = Cache + DataBase
 # service account
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ms-book-info
+  name: ms-cdb
   labels:
-    account: ms-book-info
+    account: ms-cdb
 ---
 
-# service Book Info Ratings
+# service DB
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-book-info-ratings
+  name: ms-cdb-db
   labels:
-    app: ms-book-info-ratings
-    service: ms-book-info-ratings
+    app: ms-cdb-db
+    service: ms-cdb-db
 spec:
   ports:
     - port: 80
       name: http
   selector:
-    app: ms-book-info-ratings
+    app: ms-cdb-db
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-book-info-ratings-v1
+  name: ms-cdb-db-v1
   labels:
-    app: ms-book-info-ratings
+    app: ms-cdb-db
     version: v1
 spec:
   selector:
     matchLabels:
-      app: ms-book-info-ratings
+      app: ms-cdb-db
       version: v1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ms-book-info-ratings
+        app: ms-cdb-db
         version: v1
     spec:
-      serviceAccountName: ms-book-info
+      serviceAccountName: ms-cdb
       containers:
         - name: houyi-agent
           image: houyitracing/houyi-agent
@@ -58,48 +59,106 @@ spec:
           args: [ "info" ]
           env:
             - name: SERVICE_NAME
-              value: "ms-book-info-ratings"
+              value: "ms-cdb-db"
+            - name: HTTP_ROUTE
+              value: "/api/database"
+          ports:
+            - containerPort: 80
+---
+
+# service D
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-cdb-d
+  labels:
+    app: ms-cdb-d
+    service: ms-cdb-d
+spec:
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app: ms-cdb-d
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-cdb-d-v1
+  labels:
+    app: ms-cdb-d
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: ms-cdb-d
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-cdb-d
+        version: v1
+    spec:
+      serviceAccountName: ms-cdb
+      containers:
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "info", "http://${MS_CDB_DB_SERVICE_HOST}:${MS_CDB_DB_SERVICE_PORT}/api/database" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-cdb-d"
             - name: HTTP_ROUTE
               value: "/api/do"
           ports:
             - containerPort: 80
 ---
 
-# service Book Info Reviews
+# service C
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-book-info-reviews
+  name: ms-cdb-c
   labels:
-    app: ms-book-info-reviews
-    service: ms-book-info-reviews
+    app: ms-cdb-c
+    service: ms-cdb-c
 spec:
   ports:
     - port: 80
       name: http
   selector:
-    app: ms-book-info-reviews
+    app: ms-cdb-c
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-book-info-reviews-v1
+  name: ms-cdb-c-v1
   labels:
-    app: ms-book-info-reviews
+    app: ms-cdb-c
     version: v1
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: ms-book-info-reviews
+      app: ms-cdb-c
       version: v1
+  replicas: 1
   template:
     metadata:
       labels:
-        app: ms-book-info-reviews
+        app: ms-cdb-c
         version: v1
     spec:
-      serviceAccountName: ms-book-info
+      serviceAccountName: ms-cdb
       containers:
         - name: houyi-agent
           image: houyitracing/houyi-agent
@@ -113,135 +172,51 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_BOOK_INFO_RATINGS_SERVICE_HOST}:${MS_BOOK_INFO_RATINGS_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_CDB_DB_SERVICE_HOST}:${MS_CDB_DB_SERVICE_PORT}/api/database" ]
           env:
             - name: SERVICE_NAME
-              value: "ms-book-info-reviews"
-            - name: HTTP_ROUTE
-              value: "/api/do"
-          ports:
-            - containerPort: 80
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ms-book-info-reviews-v2
-  labels:
-    app: ms-book-info-reviews
-    version: v2
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: ms-book-info-reviews
-      version: v2
-  template:
-    metadata:
-      labels:
-        app: ms-book-info-reviews
-        version: v2
-    spec:
-      serviceAccountName: ms-book-info
-      containers:
-        - name: houyi-agent
-          image: houyitracing/houyi-agent
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 5775
-            - containerPort: 5778
-            - containerPort: 6831
-            - containerPort: 6832
-            - containerPort: 14271
-        - name: ms-http
-          image: houyitracing/ms-http
-          imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_BOOK_INFO_RATINGS_SERVICE_HOST}:${MS_BOOK_INFO_RATINGS_SERVICE_PORT}/api/do" ]
-          env:
-            - name: SERVICE_NAME
-              value: "ms-book-info-reviews"
-            - name: HTTP_ROUTE
-              value: "/api/do"
-          ports:
-            - containerPort: 80
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ms-book-info-reviews-v3
-  labels:
-    app: ms-book-info-reviews
-    version: v3
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: ms-book-info-reviews
-      version: v3
-  template:
-    metadata:
-      labels:
-        app: ms-book-info-reviews
-        version: v3
-    spec:
-      serviceAccountName: ms-book-info
-      containers:
-        - name: houyi-agent
-          image: houyitracing/houyi-agent
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 5775
-            - containerPort: 5778
-            - containerPort: 6831
-            - containerPort: 6832
-            - containerPort: 14271
-        - name: ms-http
-          image: houyitracing/ms-http
-          imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_BOOK_INFO_RATINGS_SERVICE_HOST}:${MS_BOOK_INFO_RATINGS_SERVICE_PORT}/api/do" ]
-          env:
-            - name: SERVICE_NAME
-              value: "ms-book-info-reviews"
+              value: "ms-cdb-c"
             - name: HTTP_ROUTE
               value: "/api/do"
           ports:
             - containerPort: 80
 ---
 
-# service Details
+# service B
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-book-info-details
+  name: ms-cdb-b
   labels:
-    app: ms-book-info-details
-    service: ms-book-info-details
+    app: ms-cdb-b
+    service: ms-cdb-b
 spec:
   ports:
     - port: 80
       name: http
   selector:
-    app: ms-book-info-details
+    app: ms-cdb-b
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-book-info-details-v1
+  name: ms-cdb-b-v1
   labels:
-    app: ms-book-info-details
+    app: ms-cdb-b
     version: v1
 spec:
   selector:
     matchLabels:
-      app: ms-book-info-details
+      app: ms-cdb-b
       version: v1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ms-book-info-details
+        app: ms-cdb-b
         version: v1
     spec:
-      serviceAccountName: ms-book-info
+      serviceAccountName: ms-cdb
       containers:
         - name: houyi-agent
           image: houyitracing/houyi-agent
@@ -258,48 +233,48 @@ spec:
           args: [ "info" ]
           env:
             - name: SERVICE_NAME
-              value: "ms-book-info-details"
+              value: "ms-cdb-b"
             - name: HTTP_ROUTE
               value: "/api/do"
           ports:
             - containerPort: 80
 ---
 
-# service Product Page
+# service A
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-book-info-product-page
+  name: ms-cdb-a
   labels:
-    app: ms-book-info-product-page
-    service: ms-book-info-product-page
+    app: ms-cdb-a
+    service: ms-cdb-a
 spec:
   ports:
     - port: 80
       name: http
   selector:
-    app: ms-book-info-product-page
+    app: ms-cdb-a
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-book-info-product-page-v1
+  name: ms-cdb-a-v1
   labels:
-    app: ms-book-info-product-page
+    app: ms-cdb-a
     version: v1
 spec:
   selector:
     matchLabels:
-      app: ms-book-info-product-page
+      app: ms-cdb-a
       version: v1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ms-book-info-product-page
+        app: ms-cdb-a
         version: v1
     spec:
-      serviceAccountName: ms-book-info
+      serviceAccountName: ms-cdb
       containers:
         - name: houyi-agent
           image: houyitracing/houyi-agent
@@ -313,10 +288,68 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: ["info", "http://${MS_BOOK_INFO_REVIEWS_SERVICE_HOST}:${MS_BOOK_INFO_REVIEWS_SERVICE_PORT}/api/do", "http://${MS_BOOK_INFO_DETAILS_SERVICE_HOST}:${MS_BOOK_INFO_DETAILS_SERVICE_PORT}/api/do"]
+          args: [ "info", "http://${MS_CDB_C_SERVICE_HOST}:${MS_CDB_C_SERVICE_PORT}/api/do", "http://${MS_CDB_D_SERVICE_HOST}:${MS_CDB_D_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
-              value: "ms-book-info-product-page"
+              value: "ms-cdb-a"
+            - name: HTTP_ROUTE
+              value: "/api/do"
+          ports:
+            - containerPort: 80
+---
+
+# frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-cdb-frontend
+  labels:
+    app: ms-cdb-frontend
+    service: ms-cdb-frontend
+spec:
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app: ms-cdb-frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-cdb-frontend-v1
+  labels:
+    app: ms-cdb-frontend
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: ms-cdb-frontend
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-cdb-frontend
+        version: v1
+    spec:
+      serviceAccountName: ms-cdb
+      containers:
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "info", "http://${MS_CDB_A_SERVICE_HOST}:${MS_CDB_A_SERVICE_PORT}/api/do", "http://${MS_CDB_B_SERVICE_HOST}:${MS_CDB_B_SERVICE_PORT}/api/do" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-cdb-frontend"
             - name: HTTP_ROUTE
               value: "/api/frontend"
           ports:

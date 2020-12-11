@@ -2,46 +2,46 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ms-book-info
+  name: ms-branch
   labels:
-    account: ms-book-info
+    account: ms-branch
 ---
 
-# service Book Info Ratings
+# service D
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-book-info-ratings
+  name: ms-branch-d
   labels:
-    app: ms-book-info-ratings
-    service: ms-book-info-ratings
+    app: ms-branch-d
+    service: ms-branch-d
 spec:
   ports:
     - port: 80
       name: http
   selector:
-    app: ms-book-info-ratings
+    app: ms-branch-d
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-book-info-ratings-v1
+  name: ms-branch-d-v1
   labels:
-    app: ms-book-info-ratings
+    app: ms-branch-d
     version: v1
 spec:
   selector:
     matchLabels:
-      app: ms-book-info-ratings
+      app: ms-branch-d
       version: v1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ms-book-info-ratings
+        app: ms-branch-d
         version: v1
     spec:
-      serviceAccountName: ms-book-info
+      serviceAccountName: ms-branch
       containers:
         - name: houyi-agent
           image: houyitracing/houyi-agent
@@ -58,48 +58,48 @@ spec:
           args: [ "info" ]
           env:
             - name: SERVICE_NAME
-              value: "ms-book-info-ratings"
+              value: "ms-branch-d"
             - name: HTTP_ROUTE
               value: "/api/do"
           ports:
             - containerPort: 80
 ---
 
-# service Book Info Reviews
+# service C
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-book-info-reviews
+  name: ms-branch-c
   labels:
-    app: ms-book-info-reviews
-    service: ms-book-info-reviews
+    app: ms-branch-c
+    service: ms-branch-c
 spec:
   ports:
     - port: 80
       name: http
   selector:
-    app: ms-book-info-reviews
+    app: ms-branch-c
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-book-info-reviews-v1
+  name: ms-branch-c-v1
   labels:
-    app: ms-book-info-reviews
+    app: ms-branch-c
     version: v1
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: ms-book-info-reviews
+      app: ms-branch-c
       version: v1
+  replicas: 1
   template:
     metadata:
       labels:
-        app: ms-book-info-reviews
+        app: ms-branch-c
         version: v1
     spec:
-      serviceAccountName: ms-book-info
+      serviceAccountName: ms-branch
       containers:
         - name: houyi-agent
           image: houyitracing/houyi-agent
@@ -113,135 +113,51 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_BOOK_INFO_RATINGS_SERVICE_HOST}:${MS_BOOK_INFO_RATINGS_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_BRANCH_D_SERVICE_HOST}:${MS_BRANCH_D_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
-              value: "ms-book-info-reviews"
-            - name: HTTP_ROUTE
-              value: "/api/do"
-          ports:
-            - containerPort: 80
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ms-book-info-reviews-v2
-  labels:
-    app: ms-book-info-reviews
-    version: v2
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: ms-book-info-reviews
-      version: v2
-  template:
-    metadata:
-      labels:
-        app: ms-book-info-reviews
-        version: v2
-    spec:
-      serviceAccountName: ms-book-info
-      containers:
-        - name: houyi-agent
-          image: houyitracing/houyi-agent
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 5775
-            - containerPort: 5778
-            - containerPort: 6831
-            - containerPort: 6832
-            - containerPort: 14271
-        - name: ms-http
-          image: houyitracing/ms-http
-          imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_BOOK_INFO_RATINGS_SERVICE_HOST}:${MS_BOOK_INFO_RATINGS_SERVICE_PORT}/api/do" ]
-          env:
-            - name: SERVICE_NAME
-              value: "ms-book-info-reviews"
-            - name: HTTP_ROUTE
-              value: "/api/do"
-          ports:
-            - containerPort: 80
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ms-book-info-reviews-v3
-  labels:
-    app: ms-book-info-reviews
-    version: v3
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: ms-book-info-reviews
-      version: v3
-  template:
-    metadata:
-      labels:
-        app: ms-book-info-reviews
-        version: v3
-    spec:
-      serviceAccountName: ms-book-info
-      containers:
-        - name: houyi-agent
-          image: houyitracing/houyi-agent
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 5775
-            - containerPort: 5778
-            - containerPort: 6831
-            - containerPort: 6832
-            - containerPort: 14271
-        - name: ms-http
-          image: houyitracing/ms-http
-          imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_BOOK_INFO_RATINGS_SERVICE_HOST}:${MS_BOOK_INFO_RATINGS_SERVICE_PORT}/api/do" ]
-          env:
-            - name: SERVICE_NAME
-              value: "ms-book-info-reviews"
+              value: "ms-branch-c"
             - name: HTTP_ROUTE
               value: "/api/do"
           ports:
             - containerPort: 80
 ---
 
-# service Details
+# service B
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-book-info-details
+  name: ms-branch-b
   labels:
-    app: ms-book-info-details
-    service: ms-book-info-details
+    app: ms-branch-b
+    service: ms-branch-b
 spec:
   ports:
     - port: 80
       name: http
   selector:
-    app: ms-book-info-details
+    app: ms-branch-b
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-book-info-details-v1
+  name: ms-branch-b-v1
   labels:
-    app: ms-book-info-details
+    app: ms-branch-b
     version: v1
 spec:
   selector:
     matchLabels:
-      app: ms-book-info-details
+      app: ms-branch-b
       version: v1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ms-book-info-details
+        app: ms-branch-b
         version: v1
     spec:
-      serviceAccountName: ms-book-info
+      serviceAccountName: ms-branch
       containers:
         - name: houyi-agent
           image: houyitracing/houyi-agent
@@ -258,48 +174,48 @@ spec:
           args: [ "info" ]
           env:
             - name: SERVICE_NAME
-              value: "ms-book-info-details"
+              value: "ms-branch-b"
             - name: HTTP_ROUTE
               value: "/api/do"
           ports:
             - containerPort: 80
 ---
 
-# service Product Page
+# service A
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-book-info-product-page
+  name: ms-branch-a
   labels:
-    app: ms-book-info-product-page
-    service: ms-book-info-product-page
+    app: ms-branch-a
+    service: ms-branch-a
 spec:
   ports:
     - port: 80
       name: http
   selector:
-    app: ms-book-info-product-page
+    app: ms-branch-a
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-book-info-product-page-v1
+  name: ms-branch-a-v1
   labels:
-    app: ms-book-info-product-page
+    app: ms-branch-a
     version: v1
 spec:
   selector:
     matchLabels:
-      app: ms-book-info-product-page
+      app: ms-branch-a
       version: v1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ms-book-info-product-page
+        app: ms-branch-a
         version: v1
     spec:
-      serviceAccountName: ms-book-info
+      serviceAccountName: ms-branch
       containers:
         - name: houyi-agent
           image: houyitracing/houyi-agent
@@ -313,10 +229,68 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: ["info", "http://${MS_BOOK_INFO_REVIEWS_SERVICE_HOST}:${MS_BOOK_INFO_REVIEWS_SERVICE_PORT}/api/do", "http://${MS_BOOK_INFO_DETAILS_SERVICE_HOST}:${MS_BOOK_INFO_DETAILS_SERVICE_PORT}/api/do"]
+          args: [ "info", "http://${MS_BRANCH_B_SERVICE_HOST}:${MS_BRANCH_B_SERVICE_PORT}/api/do", "http://${MS_BRANCH_C_SERVICE_HOST}:${MS_BRANCH_C_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
-              value: "ms-book-info-product-page"
+              value: "ms-branch-a"
+            - name: HTTP_ROUTE
+              value: "/api/do"
+          ports:
+            - containerPort: 80
+---
+
+# frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-branch-frontend
+  labels:
+    app: ms-branch-frontend
+    service: ms-branch-frontend
+spec:
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app: ms-branch-frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-branch-frontend-v1
+  labels:
+    app: ms-branch-frontend
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: ms-branch-frontend
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-branch-frontend
+        version: v1
+    spec:
+      serviceAccountName: ms-branch
+      containers:
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "info", "http://${MS_BRANCH_A_SERVICE_HOST}:${MS_BRANCH_A_SERVICE_PORT}/api/do" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-branch-frontend"
             - name: HTTP_ROUTE
               value: "/api/frontend"
           ports:

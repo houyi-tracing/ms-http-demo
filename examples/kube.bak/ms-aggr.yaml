@@ -1,0 +1,240 @@
+# service account
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ms-aggr
+  labels:
+    account: ms-aggr
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-aggr-a
+  labels:
+    app: ms-aggr-a
+    service: ms-aggr-a
+spec:
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app: ms-aggr-a
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-aggr-a-v1
+  labels:
+    app: ms-aggr-a
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: ms-aggr-a
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-aggr-a
+        version: v1
+    spec:
+      serviceAccountName: ms-aggr
+      containers:
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "info" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-aggr-a"
+            - name: HTTP_ROUTE
+              value: "/api/do"
+          ports:
+            - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-aggr-b
+  labels:
+    app: ms-aggr-b
+    service: ms-aggr-b
+spec:
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app: ms-aggr-b
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-aggr-b-v1
+  labels:
+    app: ms-aggr-b
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: ms-aggr-b
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-aggr-b
+        version: v1
+    spec:
+      serviceAccountName: ms-aggr
+      containers:
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "info" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-aggr-b"
+            - name: HTTP_ROUTE
+              value: "/api/do"
+          ports:
+            - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-aggr-c
+  labels:
+    app: ms-aggr-c
+    service: ms-aggr-c
+spec:
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app: ms-aggr-c
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-aggr-c-v1
+  labels:
+    app: ms-aggr-c
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: ms-aggr-c
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-aggr-c
+        version: v1
+    spec:
+      serviceAccountName: ms-aggr
+      containers:
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "info" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-aggr-c"
+            - name: HTTP_ROUTE
+              value: "/api/do"
+          ports:
+            - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-aggr-aggregator
+  labels:
+    app: ms-aggr-aggregator
+    service: ms-aggr-aggregator
+spec:
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app: ms-aggr-aggregator
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-aggr-aggregator-v1
+  labels:
+    app: ms-aggr-aggregator
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: ms-aggr-aggregator
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ms-aggr-aggregator
+        version: v1
+    spec:
+      serviceAccountName: ms-aggr
+      containers:
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          args: [ "info", "http://${MS_AGGR__A_SERVICE_HOST}:${MS_AGGR__A_SERVICE_PORT}/api/do", "http://${MS_AGGR__B_SERVICE_HOST}:${MS_AGGR__B_SERVICE_PORT}/api/do", "http://${MS_AGGR__C_SERVICE_HOST}:${MS_AGGR__C_SERVICE_PORT}/api/do" ]
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SERVICE_NAME
+              value: "ms-aggr-aggregator"
+            - name: HTTP_ROUTE
+              value: "/api/frontend"
+          ports:
+            - containerPort: 80
+---
