@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: ms-aggr-frontend
+  name: ms-aggr
 spec:
   selector:
     istio: ingressgateway
@@ -12,6 +12,54 @@ spec:
         protocol: HTTP
       hosts:
         - "*"
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-aggr-a
+spec:
+  host: ms-aggr-a
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-aggr-b
+spec:
+  host: ms-aggr-b
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-aggr-c
+spec:
+  host: ms-aggr-c
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-aggr-frontend
+spec:
+  host: ms-aggr-frontend
+  subsets:
+    - name: v1
+      labels:
+        version: v1
 ---
 
 apiVersion: networking.istio.io/v1alpha3
@@ -35,14 +83,3 @@ spec:
             subset: v1
 ---
 
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: ms-aggr-frontend
-spec:
-  host: ms-aggr-frontend
-  subsets:
-    - name: v1
-      labels:
-        version: v1
----
