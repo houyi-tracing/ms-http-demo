@@ -6,9 +6,18 @@ spec:
   hosts:
     - ms-aggr-a
   http:
-    - fault:
+    - match:
+        - uri:
+            prefix: /api/v1/ms-aggr/a
+      fault:
         abort:
           percentage:
             value: 100.0
           httpStatus: 500
+      route:
+        - destination:
+            host: ms-aggr-a
+            port:
+              number: 80
+            subset: v1
 ---
