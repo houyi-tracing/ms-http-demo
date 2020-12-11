@@ -248,9 +248,11 @@ metadata:
     app: ms-share-frontend
     service: ms-share-frontend
 spec:
+  type: NodePort
   ports:
     - port: 80
       name: http
+      nodePort: 30007
   selector:
     app: ms-share-frontend
 ---

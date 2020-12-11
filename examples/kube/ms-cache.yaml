@@ -307,9 +307,11 @@ metadata:
     app: ms-cdb-frontend
     service: ms-cdb-frontend
 spec:
+  type: NodePort
   ports:
     - port: 80
       name: http
+      nodePort: 30004
   selector:
     app: ms-cdb-frontend
 ---

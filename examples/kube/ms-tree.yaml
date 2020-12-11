@@ -306,9 +306,11 @@ metadata:
     app: ms-tree-frontend
     service: ms-tree-frontend
 spec:
+  type: NodePort
   ports:
     - port: 80
       name: http
+      nodePort: 30008
   selector:
     app: ms-tree-frontend
 ---

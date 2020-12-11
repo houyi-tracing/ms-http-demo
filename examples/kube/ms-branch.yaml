@@ -248,9 +248,11 @@ metadata:
     app: ms-branch-frontend
     service: ms-branch-frontend
 spec:
+  type: NodePort
   ports:
     - port: 80
       name: http
+      nodePort: 30003
   selector:
     app: ms-branch-frontend
 ---
