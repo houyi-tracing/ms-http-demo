@@ -6,7 +6,7 @@ spec:
   hosts:
     - ms-aggr-a
   http:
-      fault:
+    - fault:
         abort:
           percentage:
             value: 100.0
