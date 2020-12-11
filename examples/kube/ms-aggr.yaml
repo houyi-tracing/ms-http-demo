@@ -60,7 +60,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-aggr-a"
             - name: HTTP_ROUTE
-              value: "/api/v1/aggr/a"
+              value: "/api/v1/ms-aggr/a"
           ports:
             - containerPort: 80
 ---
@@ -118,7 +118,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-aggr-b"
             - name: HTTP_ROUTE
-              value: "/api/v1/aggr/b"
+              value: "/api/v1/ms-aggr/b"
           ports:
             - containerPort: 80
 ---
@@ -176,7 +176,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-aggr-c"
             - name: HTTP_ROUTE
-              value: "/api/v1/aggr/c"
+              value: "/api/v1/ms-aggr/c"
           ports:
             - containerPort: 80
 ---
@@ -228,13 +228,13 @@ spec:
             - containerPort: 14271
         - name: ms-http
           image: houyitracing/ms-http
-          args: [ "info", "http://ms-aggr-a/api/v1/aggr/a", "http://ms-aggr-b/api/v1/aggr/b", "http://ms-aggr-c/api/v1/aggr/c" ]
+          args: [ "info", "http://ms-aggr-a/api/v1/ms-aggr/a", "http://ms-aggr-b/api/v1/ms-aggr/b", "http://ms-aggr-c/api/v1/ms-aggr/c" ]
           imagePullPolicy: IfNotPresent
           env:
             - name: SERVICE_NAME
               value: "ms-aggr-frontend"
             - name: HTTP_ROUTE
-              value: "/api/v1/aggr/frontend"
+              value: "/api/v1/ms-aggr/frontend"
           ports:
             - containerPort: 80
 ---
