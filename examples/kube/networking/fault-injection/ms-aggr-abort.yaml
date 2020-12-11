@@ -18,6 +18,8 @@ spec:
           httpStatus: 500
       route:
         - destination:
-            host: SERVICE_NAME
+            host: ms-aggr-frontend
+            port:
+              number: 80
             subset: v1
 ---
