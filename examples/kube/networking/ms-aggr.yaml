@@ -21,7 +21,7 @@ metadata:
   name: ms-aggr-frontend
 spec:
   hosts:
-    - ms-aggr-frontend
+    - "*"
   gateways:
     - ms-aggr-frontend
   http:
