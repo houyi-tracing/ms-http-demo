@@ -33,6 +33,33 @@ spec:
             port:
               number: 80
             subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/aggr/a
+      route:
+        - destination:
+            host: ms-aggr-a
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/aggr/b
+      route:
+        - destination:
+            host: ms-aggr-b
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/aggr/c
+      route:
+        - destination:
+            host: ms-aggr-c
+            port:
+              number: 80
+            subset: v1
 ---
 
 apiVersion: networking.istio.io/v1alpha3
