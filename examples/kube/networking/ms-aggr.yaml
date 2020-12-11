@@ -38,7 +38,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: ms-aggr
+  name: ms-aggr-frontend
 spec:
   host: ms-aggr-frontend
   subsets:
