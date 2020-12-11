@@ -1,10 +1,11 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: ms-aggr-gateway
+  name: ms-aggr-frontend
 spec:
   selector:
     istio: ingressgateway
+    app: ms-aggr-frontend
   servers:
     - port:
         number: 80
@@ -22,7 +23,7 @@ spec:
   hosts:
     - ms-aggr-frontend
   gateways:
-    - ms-aggr-gateway
+    - ms-aggr-frontend
   http:
     - match:
         - uri:
