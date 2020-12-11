@@ -4,7 +4,9 @@ metadata:
   name: ms-aggr-frontend
 spec:
   hosts:
-    - ms-aggr-fron
+    - "*"
+  gateways:
+    - ms-aggr
   http:
     - match:
         - uri:
