@@ -181,11 +181,9 @@ metadata:
     app: ms-proxy-frontend
     service: ms-proxy-frontend
 spec:
-  type: NodePort
   ports:
     - port: 80
       name: http
-      nodePort: 30006
   selector:
     app: ms-proxy-frontend
 ---
