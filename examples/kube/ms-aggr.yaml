@@ -228,7 +228,7 @@ spec:
             - containerPort: 14271
         - name: ms-http
           image: houyitracing/ms-http
-          args: [ "info", "http://${MS_AGGR_A_SERVICE_HOST}:${MS_AGGR_A_SERVICE_PORT}/api/do", "http://${MS_AGGR_B_SERVICE_HOST}:${MS_AGGR_B_SERVICE_PORT}/api/do", "http://${MS_AGGR_C_SERVICE_HOST}:${MS_AGGR_C_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://ms-aggr-a:${MS_AGGR_A_SERVICE_PORT}/api/do", "http://ms-aggr-b:${MS_AGGR_B_SERVICE_PORT}/api/do", "http://ms-aggr-c:${MS_AGGR_C_SERVICE_PORT}/api/do" ]
           imagePullPolicy: IfNotPresent
           env:
             - name: SERVICE_NAME
