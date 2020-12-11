@@ -11,7 +11,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "example.host.com"
+        - example.host.com
 ---
 
 apiVersion: networking.istio.io/v1alpha3
@@ -20,13 +20,13 @@ metadata:
   name: ms-aggr
 spec:
   hosts:
-    - "*"
+    - example.host.com
   gateways:
     - ms-aggr-gateway
   http:
     - match:
         - uri:
-            exact: /api/frontend
+            prefix: /api/frontend
       route:
         - destination:
             host: ms-aggr-frontend
