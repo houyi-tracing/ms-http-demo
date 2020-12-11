@@ -30,6 +30,8 @@ spec:
       route:
         - destination:
             host: ms-aggr-frontend
+            port:
+              number: 80
             subset: v1
 ---
 
