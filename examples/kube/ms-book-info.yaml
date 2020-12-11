@@ -60,7 +60,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-book-info-ratings"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-book-info/ratings"
           ports:
             - containerPort: 80
 ---
@@ -113,14 +113,15 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_BOOK_INFO_RATINGS_SERVICE_HOST}:${MS_BOOK_INFO_RATINGS_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://ms-book-info-ratings/api/v1/book-info/ratings" ]
           env:
             - name: SERVICE_NAME
               value: "ms-book-info-reviews"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-book-info/reviews"
           ports:
             - containerPort: 80
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -155,12 +156,12 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_BOOK_INFO_RATINGS_SERVICE_HOST}:${MS_BOOK_INFO_RATINGS_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://ms-book-info-ratings/api/v1/book-info/ratings" ]
           env:
             - name: SERVICE_NAME
               value: "ms-book-info-reviews"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-book-info/reviews"
           ports:
             - containerPort: 80
 ---
@@ -197,12 +198,12 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_BOOK_INFO_RATINGS_SERVICE_HOST}:${MS_BOOK_INFO_RATINGS_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://ms-book-info-ratings/api/v1/book-info/ratings" ]
           env:
             - name: SERVICE_NAME
               value: "ms-book-info-reviews"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-book-info/reviews"
           ports:
             - containerPort: 80
 ---
@@ -260,7 +261,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-book-info-details"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-book-info/details"
           ports:
             - containerPort: 80
 ---
@@ -315,12 +316,12 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: ["info", "http://${MS_BOOK_INFO_REVIEWS_SERVICE_HOST}:${MS_BOOK_INFO_REVIEWS_SERVICE_PORT}/api/do", "http://${MS_BOOK_INFO_DETAILS_SERVICE_HOST}:${MS_BOOK_INFO_DETAILS_SERVICE_PORT}/api/do"]
+          args: [ "info", "http://ms-book-info-reviews/api/v1/ms-book-info/reviews", "http://ms-book-info-details/api/v1/ms-book-info/details" ]
           env:
             - name: SERVICE_NAME
               value: "ms-book-info-frontend"
             - name: HTTP_ROUTE
-              value: "/api/frontend"
+              value: "/api/v1/book-info/frontend"
           ports:
             - containerPort: 80
 ---

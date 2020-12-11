@@ -22,6 +22,7 @@ spec:
   selector:
     app: ms-share-d
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -60,7 +61,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-share-d"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-share/d"
           ports:
             - containerPort: 80
 ---
@@ -113,12 +114,12 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_SHARE_D_SERVICE_HOST}:${MS_SHARE_D_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://ms-share-d/api/v1/ms-share/d" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-c"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-share/c"
           ports:
             - containerPort: 80
 ---
@@ -176,7 +177,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-share-b"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-share/b"
           ports:
             - containerPort: 80
 ---
@@ -229,12 +230,12 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_SHARE_B_SERVICE_HOST}:${MS_SHARE_B_SERVICE_PORT}/api/do", "http://${MS_SHARE_C_SERVICE_HOST}:${MS_SHARE_C_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://ms-share-b/api/v1/ms-share/b", "http://ms-share-c/api/v1/ms-share/c" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-a"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-share/a"
           ports:
             - containerPort: 80
 ---
@@ -289,12 +290,12 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_SHARE_A_SERVICE_HOST}:${MS_SHARE_A_SERVICE_PORT}/api/do", "http://${MS_SHARE_C_SERVICE_HOST}:${MS_SHARE_C_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://ms-share-a", "http://ms-share-c/api/v1/ms-share/c" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-frontend"
             - name: HTTP_ROUTE
-              value: "/api/frontend"
+              value: "/api/v1/share/frontend"
           ports:
             - containerPort: 80
 ---

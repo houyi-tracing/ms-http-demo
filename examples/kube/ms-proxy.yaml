@@ -57,7 +57,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-proxy-a"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-proxy/a"
           ports:
             - containerPort: 80
 ---
@@ -113,7 +113,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-proxy-b"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-proxy/b"
           ports:
             - containerPort: 80
 ---
@@ -169,7 +169,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-proxy-c"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-proxy/c"
           ports:
             - containerPort: 80
 ---
@@ -221,13 +221,13 @@ spec:
             - containerPort: 14271
         - name: ms-http
           image: houyitracing/ms-http
-          args: [ "info", "http://${MS_PROXY_A_SERVICE_HOST}:${MS_PROXY_A_SERVICE_PORT}/api/do", "http://${MS_PROXY_B_SERVICE_HOST}:${MS_PROXY_B_SERVICE_PORT}/api/do", "http://${MS_PROXY_C_SERVICE_HOST}:${MS_PROXY_C_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://ms-proxy-a/api/v1/ms-proxy/a", "http://ms-proxy-b/api/v1/ms-proxy/b", "http://ms-proxy-c/api/v1/ms-proxy/c" ]
           imagePullPolicy: IfNotPresent
           env:
             - name: SERVICE_NAME
               value: "ms-proxy-frontend"
             - name: HTTP_ROUTE
-              value: "/api/frontend"
+              value: "/api/v1/ms-proxy/frontend"
           ports:
             - containerPort: 80
 ---

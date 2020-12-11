@@ -17,8 +17,8 @@ metadata:
     service: ms-chain-c
 spec:
   ports:
-  - port: 80
-    name: http
+    - port: 80
+      name: http
   selector:
     app: ms-chain-c
 ---
@@ -43,26 +43,26 @@ spec:
     spec:
       serviceAccountName: ms-chain
       containers:
-      - name: houyi-agent
-        image: houyitracing/houyi-agent
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 5775
-        - containerPort: 5778
-        - containerPort: 6831
-        - containerPort: 6832
-        - containerPort: 14271
-      - name: ms-http
-        image: houyitracing/ms-http
-        imagePullPolicy: IfNotPresent
-        args: ["info"]
-        env:
-        - name: SERVICE_NAME
-          value: "ms-chain-c"
-        - name: HTTP_ROUTE
-          value: "/api/do"
-        ports:
-        - containerPort: 80
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "info" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-chain-c"
+            - name: HTTP_ROUTE
+              value: "/api/v1/ms-chain/c"
+          ports:
+            - containerPort: 80
 ---
 
 # service B
@@ -75,8 +75,8 @@ metadata:
     service: ms-chain-b
 spec:
   ports:
-  - port: 80
-    name: http
+    - port: 80
+      name: http
   selector:
     app: ms-chain-b
 ---
@@ -101,26 +101,26 @@ spec:
     spec:
       serviceAccountName: ms-chain
       containers:
-      - name: houyi-agent
-        image: houyitracing/houyi-agent
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 5775
-        - containerPort: 5778
-        - containerPort: 6831
-        - containerPort: 6832
-        - containerPort: 14271
-      - name: ms-http
-        image: houyitracing/ms-http
-        imagePullPolicy: IfNotPresent
-        args: ["info", "http://${MS_CHAIN_C_SERVICE_HOST}:${MS_CHAIN_C_SERVICE_PORT}/api/do"]
-        env:
-        - name: SERVICE_NAME
-          value: "ms-chain-b"
-        - name: HTTP_ROUTE
-          value: "/api/do"
-        ports:
-        - containerPort: 80
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "info", "http://ms-chain-c/api/v1/ms-chain/c" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-chain-b"
+            - name: HTTP_ROUTE
+              value: "/api/v1/ms-chain/b"
+          ports:
+            - containerPort: 80
 ---
 
 # service A
@@ -133,8 +133,8 @@ metadata:
     service: ms-chain-a
 spec:
   ports:
-  - port: 80
-    name: http
+    - port: 80
+      name: http
   selector:
     app: ms-chain-a
 ---
@@ -159,26 +159,26 @@ spec:
     spec:
       serviceAccountName: ms-chain
       containers:
-      - name: houyi-agent
-        image: houyitracing/houyi-agent
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 5775
-        - containerPort: 5778
-        - containerPort: 6831
-        - containerPort: 6832
-        - containerPort: 14271
-      - name: ms-http
-        image: houyitracing/ms-http
-        imagePullPolicy: IfNotPresent
-        args: ["info", "http://${MS_CHAIN_B_SERVICE_HOST}:${MS_CHAIN_B_SERVICE_PORT}/api/do"]
-        env:
-        - name: SERVICE_NAME
-          value: "ms-chain-a"
-        - name: HTTP_ROUTE
-          value: "/api/do"
-        ports:
-        - containerPort: 80
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "info", "http://ms-chain-b/api/v1/ms-chain/b" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-chain-a"
+            - name: HTTP_ROUTE
+              value: "/api/v1/ms-chain/a"
+          ports:
+            - containerPort: 80
 ---
 
 # frontend
@@ -192,9 +192,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - port: 80
-    name: http
-    nodePort: 30005
+    - port: 80
+      name: http
+      nodePort: 30005
   selector:
     app: ms-chain-frontend
 ---
@@ -219,24 +219,24 @@ spec:
     spec:
       serviceAccountName: ms-chain
       containers:
-      - name: houyi-agent
-        image: houyitracing/houyi-agent
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 5775
-        - containerPort: 5778
-        - containerPort: 6831
-        - containerPort: 6832
-        - containerPort: 14271
-      - name: ms-http
-        image: houyitracing/ms-http
-        imagePullPolicy: IfNotPresent
-        args: ["info", "http://${MS_CHAIN_A_SERVICE_HOST}:${MS_CHAIN_A_SERVICE_PORT}/api/do"]
-        env:
-        - name: SERVICE_NAME
-          value: "ms-chain-frontend"
-        - name: HTTP_ROUTE
-          value: "/api/frontend"
-        ports:
-        - containerPort: 80
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "info", "http://ms-chain-a/api/v1/ms-chain/a" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-chain-frontend"
+            - name: HTTP_ROUTE
+              value: "/api/v1/chain/frontend"
+          ports:
+            - containerPort: 80
 ---

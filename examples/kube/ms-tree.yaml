@@ -60,7 +60,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-tree-e"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-tree/e"
           ports:
             - containerPort: 80
 ---
@@ -118,7 +118,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-tree-d"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-tree/d"
           ports:
             - containerPort: 80
 ---
@@ -176,7 +176,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-tree-c"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-tree/c"
           ports:
             - containerPort: 80
 ---
@@ -229,12 +229,12 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_TREE_C_SERVICE_HOST}:${MS_TREE_C_SERVICE_PORT}/api/do", "http://${MS_TREE_D_SERVICE_HOST}:${MS_TREE_D_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://ms-tree-c/api/v1/ms-tree/c", "http://ms-tree-d/api/v1/ms-tree/d" ]
           env:
             - name: SERVICE_NAME
               value: "ms-tree-b"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-tree/b"
           ports:
             - containerPort: 80
 ---
@@ -287,12 +287,12 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_TREE_B_SERVICE_HOST}:${MS_TREE_B_SERVICE_PORT}/api/do", "http://${MS_TREE_E_SERVICE_HOST}:${MS_TREE_E_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://ms-tree-b/api/v1/ms-tree/b", "http://ms-tree-e/api/v1/ms-tree/e" ]
           env:
             - name: SERVICE_NAME
               value: "ms-tree-a"
             - name: HTTP_ROUTE
-              value: "/api/do"
+              value: "/api/v1/ms-tree/a"
           ports:
             - containerPort: 80
 ---
@@ -347,12 +347,12 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_TREE_A_SERVICE_HOST}:${MS_TREE_A_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://ms-tree-a/api/v1/ms-tree/a" ]
           env:
             - name: SERVICE_NAME
               value: "ms-tree-frontend"
             - name: HTTP_ROUTE
-              value: "/api/frontend"
+              value: "/api/v1/tree/frontend"
           ports:
             - containerPort: 80
 ---
