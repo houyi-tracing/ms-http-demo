@@ -25,7 +25,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-tree-e
+  name: ms-tree-e-v1
   labels:
     app: ms-tree-e
     version: v1
@@ -83,7 +83,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-tree-d
+  name: ms-tree-d-v1
   labels:
     app: ms-tree-d
     version: v1
@@ -141,7 +141,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-tree-c
+  name: ms-tree-c-v1
   labels:
     app: ms-tree-c
     version: v1
@@ -199,7 +199,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-tree-b
+  name: ms-tree-b-v1
   labels:
     app: ms-tree-b
     version: v1
@@ -245,7 +245,7 @@ kind: Service
 metadata:
   name: ms-tree-a
   labels:
-    app: ms-tree-a
+    app: ms-tree-a-v1
     service: ms-tree-a
 spec:
   ports:
@@ -315,7 +315,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-tree-frontend
+  name: ms-tree-frontend-v1
   labels:
     app: ms-tree-frontend
     version: v1

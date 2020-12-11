@@ -25,7 +25,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-aggr-a
+  name: ms-aggr-a-v1
   labels:
     app: ms-aggr-a
     version: v1
@@ -83,7 +83,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-aggr-b
+  name: ms-aggr-b-v1
   labels:
     app: ms-aggr-b
     version: v1
@@ -141,7 +141,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-aggr-c
+  name: ms-aggr-c-v1
   labels:
     app: ms-aggr-c
     version: v1
@@ -199,7 +199,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-aggr-aggregator
+  name: ms-aggr-aggregator-v1
   labels:
     app: ms-aggr-aggregator
     version: v1

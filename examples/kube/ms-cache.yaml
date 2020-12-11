@@ -26,7 +26,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-cdb-db
+  name: ms-cdb-db-v1
   labels:
     app: ms-cdb-db
     version: v1
@@ -84,7 +84,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-cdb-d
+  name: ms-cdb-d-v1
   labels:
     app: ms-cdb-d
     version: v1
@@ -142,7 +142,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-cdb-c
+  name: ms-cdb-c-v1
   labels:
     app: ms-cdb-c
     version: v1
@@ -200,7 +200,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-cdb-b
+  name: ms-cdb-b-v1
   labels:
     app: ms-cdb-b
     version: v1
@@ -258,7 +258,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-cdb-a
+  name: ms-cdb-a-v1
   labels:
     app: ms-cdb-a
     version: v1
@@ -316,7 +316,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-cdb-frontend
+  name: ms-cdb-frontend-v1
   labels:
     app: ms-cdb-frontend
     version: v1

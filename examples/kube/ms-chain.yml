@@ -25,7 +25,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-chain-c
+  name: ms-chain-c-v1
   labels:
     app: ms-chain-c
     version: v1
@@ -83,7 +83,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-chain-b
+  name: ms-chain-b-v1
   labels:
     app: ms-chain-b
     version: v1
@@ -141,7 +141,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-chain-a
+  name: ms-chain-a-v1
   labels:
     app: ms-chain-a
     version: v1
@@ -199,7 +199,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-chain-frontend
+  name: ms-chain-frontend-v1
   labels:
     app: ms-chain-frontend
     version: v1

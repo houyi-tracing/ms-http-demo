@@ -22,7 +22,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-proxy-a
+  name: ms-proxy-a-v1
   labels:
     app: ms-proxy-a
     version: v1
@@ -78,7 +78,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-proxy-b
+  name: ms-proxy-b-v1
   labels:
     app: ms-proxy-b
     version: v1
@@ -134,7 +134,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-proxy-c
+  name: ms-proxy-c-v1
   labels:
     app: ms-proxy-c
     version: v1
@@ -190,7 +190,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-proxy-frontend
+  name: ms-proxy-frontend-v1
   labels:
     app: ms-proxy-frontend
     version: v1

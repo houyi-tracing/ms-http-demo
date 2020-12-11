@@ -2,46 +2,46 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ms-share
+  name: ms-book-info
   labels:
-    account: ms-share
+    account: ms-book-info
 ---
 
-# service D
+# service Book Info Ratings
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-share-d
+  name: ms-book-info-ratings
   labels:
-    app: ms-share-d
-    service: ms-share-d
+    app: ms-book-info-ratings
+    service: ms-book-info-ratings
 spec:
   ports:
     - port: 80
       name: http
   selector:
-    app: ms-share-d
+    app: ms-book-info-ratings
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-share-d-v1
+  name: ms-book-info-ratings-v1
   labels:
-    app: ms-share-d
+    app: ms-book-info-ratings
     version: v1
 spec:
   selector:
     matchLabels:
-      app: ms-share-d
+      app: ms-book-info-ratings
       version: v1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ms-share-d
+        app: ms-book-info-ratings
         version: v1
     spec:
-      serviceAccountName: ms-share
+      serviceAccountName: ms-book-info
       containers:
         - name: houyi-agent
           image: houyitracing/houyi-agent
@@ -58,48 +58,48 @@ spec:
           args: [ "info" ]
           env:
             - name: SERVICE_NAME
-              value: "ms-share-d"
+              value: "ms-book-info-ratings"
             - name: HTTP_ROUTE
               value: "/api/do"
           ports:
             - containerPort: 80
 ---
 
-# service C
+# service Book Info Reviews
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-share-c
+  name: ms-book-info-reviews
   labels:
-    app: ms-share-c
-    service: ms-share-c
+    app: ms-book-info-reviews
+    service: ms-book-info-reviews
 spec:
   ports:
     - port: 80
       name: http
   selector:
-    app: ms-share-c
+    app: ms-book-info-reviews
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-share-c-v1
+  name: ms-book-info-reviews-v1
   labels:
-    app: ms-share-c
+    app: ms-book-info-reviews
     version: v1
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: ms-share-c
+      app: ms-book-info-reviews
       version: v1
-  replicas: 1
   template:
     metadata:
       labels:
-        app: ms-share-c
+        app: ms-book-info-reviews
         version: v1
     spec:
-      serviceAccountName: ms-share
+      serviceAccountName: ms-book-info
       containers:
         - name: houyi-agent
           image: houyitracing/houyi-agent
@@ -113,51 +113,135 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_SHARE_D_SERVICE_HOST}:${MS_SHARE_D_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_BOOK_INFO_RATINGS_SERVICE_HOST}:${MS_BOOK_INFO_RATINGS_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
-              value: "ms-share-c"
+              value: "ms-book-info-reviews"
+            - name: HTTP_ROUTE
+              value: "/api/do"
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-book-info-reviews-v2
+  labels:
+    app: ms-book-info-reviews
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-book-info-reviews
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: ms-book-info-reviews
+        version: v2
+    spec:
+      serviceAccountName: ms-book-info
+      containers:
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "info", "http://${MS_BOOK_INFO_RATINGS_SERVICE_HOST}:${MS_BOOK_INFO_RATINGS_SERVICE_PORT}/api/do" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-book-info-reviews"
+            - name: HTTP_ROUTE
+              value: "/api/do"
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-book-info-reviews-v3
+  labels:
+    app: ms-book-info-reviews
+    version: v3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-book-info-reviews
+      version: v3
+  template:
+    metadata:
+      labels:
+        app: ms-book-info-reviews
+        version: v3
+    spec:
+      serviceAccountName: ms-book-info
+      containers:
+        - name: houyi-agent
+          image: houyitracing/houyi-agent
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5775
+            - containerPort: 5778
+            - containerPort: 6831
+            - containerPort: 6832
+            - containerPort: 14271
+        - name: ms-http
+          image: houyitracing/ms-http
+          imagePullPolicy: IfNotPresent
+          args: [ "info", "http://${MS_BOOK_INFO_RATINGS_SERVICE_HOST}:${MS_BOOK_INFO_RATINGS_SERVICE_PORT}/api/do" ]
+          env:
+            - name: SERVICE_NAME
+              value: "ms-book-info-reviews"
             - name: HTTP_ROUTE
               value: "/api/do"
           ports:
             - containerPort: 80
 ---
 
-# service B
+# service Details
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-share-b
+  name: ms-book-info-details
   labels:
-    app: ms-share-b
-    service: ms-share-b
+    app: ms-book-info-details
+    service: ms-book-info-details
 spec:
   ports:
     - port: 80
       name: http
   selector:
-    app: ms-share-b
+    app: ms-book-info-details
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-share-b-v1
+  name: ms-book-info-details-v1
   labels:
-    app: ms-share-b
+    app: ms-book-info-details
     version: v1
 spec:
   selector:
     matchLabels:
-      app: ms-share-b
+      app: ms-book-info-details
       version: v1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ms-share-b
+        app: ms-book-info-details
         version: v1
     spec:
-      serviceAccountName: ms-share
+      serviceAccountName: ms-book-info
       containers:
         - name: houyi-agent
           image: houyitracing/houyi-agent
@@ -174,48 +258,48 @@ spec:
           args: [ "info" ]
           env:
             - name: SERVICE_NAME
-              value: "ms-share-b"
+              value: "ms-book-info-details"
             - name: HTTP_ROUTE
               value: "/api/do"
           ports:
             - containerPort: 80
 ---
 
-# service A
+# service Product Page
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-share-a
+  name: ms-book-info-product-page
   labels:
-    app: ms-share-a
-    service: ms-share-a
+    app: ms-book-info-product-page
+    service: ms-book-info-product-page
 spec:
   ports:
     - port: 80
       name: http
   selector:
-    app: ms-share-a
+    app: ms-book-info-product-page
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-share-a-v1
+  name: ms-book-info-product-page-v1
   labels:
-    app: ms-share-a
+    app: ms-book-info-product-page
     version: v1
 spec:
   selector:
     matchLabels:
-      app: ms-share-a
+      app: ms-book-info-product-page
       version: v1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ms-share-a
+        app: ms-book-info-product-page
         version: v1
     spec:
-      serviceAccountName: ms-share
+      serviceAccountName: ms-book-info
       containers:
         - name: houyi-agent
           image: houyitracing/houyi-agent
@@ -229,68 +313,10 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_SHARE_B_SERVICE_HOST}:${MS_SHARE_B_SERVICE_PORT}/api/do", "http://${MS_SHARE_C_SERVICE_HOST}:${MS_SHARE_C_SERVICE_PORT}/api/do" ]
+          args: [ "info", "http://${MS_BOOK_INFO_REVIEWS_SERVICE_HOST}:${MS_BOOK_INFO_REVIEWS_SERVICE_PORT}/api/do", "http://${MS_BOOK_INFO_DETAILS_SERVICE_HOST}:${MS_BOOK_INFO_DETAILS_SERVICE_PORT}/api/do" ]
           env:
             - name: SERVICE_NAME
-              value: "ms-share-a"
-            - name: HTTP_ROUTE
-              value: "/api/do"
-          ports:
-            - containerPort: 80
----
-
-# frontend
-apiVersion: v1
-kind: Service
-metadata:
-  name: ms-share-frontend
-  labels:
-    app: ms-share-frontend
-    service: ms-share-frontend
-spec:
-  ports:
-    - port: 80
-      name: http
-  selector:
-    app: ms-share-frontend
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ms-share-frontend-v1
-  labels:
-    app: ms-share-frontend
-    version: v1
-spec:
-  selector:
-    matchLabels:
-      app: ms-share-frontend
-      version: v1
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: ms-share-frontend
-        version: v1
-    spec:
-      serviceAccountName: ms-share
-      containers:
-        - name: houyi-agent
-          image: houyitracing/houyi-agent
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 5775
-            - containerPort: 5778
-            - containerPort: 6831
-            - containerPort: 6832
-            - containerPort: 14271
-        - name: ms-http
-          image: houyitracing/ms-http
-          imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_SHARE_A_SERVICE_HOST}:${MS_SHARE_A_SERVICE_PORT}/api/do", "http://${MS_SHARE_C_SERVICE_HOST}:${MS_SHARE_C_SERVICE_PORT}/api/do" ]
-          env:
-            - name: SERVICE_NAME
-              value: "ms-share-frontend"
+              value: "ms-book-info-product-page
             - name: HTTP_ROUTE
               value: "/api/frontend"
           ports:

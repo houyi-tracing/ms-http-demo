@@ -25,7 +25,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-branch-d
+  name: ms-branch-d-v1
   labels:
     app: ms-branch-d
     version: v1
@@ -83,7 +83,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-branch-c
+  name: ms-branch-c-v1
   labels:
     app: ms-branch-c
     version: v1
@@ -141,7 +141,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-branch-b
+  name: ms-branch-b-v1
   labels:
     app: ms-branch-b
     version: v1
@@ -199,7 +199,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-branch-a
+  name: ms-branch-a-v1
   labels:
     app: ms-branch-a
     version: v1
@@ -257,7 +257,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-branch-frontend
+  name: ms-branch-frontend-v1
   labels:
     app: ms-branch-frontend
     version: v1
