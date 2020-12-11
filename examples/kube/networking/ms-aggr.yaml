@@ -63,6 +63,62 @@ spec:
 ---
 
 apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-aggr-frontend
+spec:
+  hosts:
+    - ms-aggr-frontend
+  http:
+    - route:
+        - destination:
+            host: ms-aggr-frontend
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-aggr-a
+spec:
+  hosts:
+    - ms-aggr-a
+  http:
+    - route:
+        - destination:
+            host: ms-aggr-a
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-aggr-b
+spec:
+  hosts:
+    - ms-aggr-b
+  http:
+    - route:
+        - destination:
+            host: ms-aggr-b
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-aggr-c
+spec:
+  hosts:
+    - ms-aggr-c
+  http:
+    - route:
+        - destination:
+            host: ms-aggr-c
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: ms-aggr-a
