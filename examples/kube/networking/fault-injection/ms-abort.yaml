@@ -3,10 +3,19 @@ kind: VirtualService
 metadata:
   name: SERVICE_NAME
 spec:
+  hosts:
+    - SERVICE_NAME
   http:
+    - match:
+        - uri:
+            prefix: /api/frontend
       fault:
         abort:
           percentage:
             value: ABORT_PERCENTAGE
           httpStatus: 500
+      route:
+        - destination:
+            host: SERVICE_NAME
+            subset: v1
 ---
