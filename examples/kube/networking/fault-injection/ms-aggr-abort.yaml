@@ -14,7 +14,7 @@ spec:
       fault:
         abort:
           percentage:
-            value: ABORT_PERCENTAGE
+            value: 100.0
           httpStatus: 500
       route:
         - destination:
