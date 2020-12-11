@@ -8,13 +8,8 @@ if [[ -z $SERVICE_NAME ]]; then
   exit -1
 fi
 
-file=$( ls ./ | grep 'ms-'${SERVICE_NAME}'-abort.yaml')
-if [[ -z $file ]]; then
-  echo "YAML file for service ${SERVICE_NAME} does not exist"
-  exit -1
-else
-  sed 's/[SERVICE_NAME]/'${SERVICE_NAME}'/g' file | sed 's/[ABORT_PERCENTAGE]/'${PERCENTAGE}'/g' - | echo
-fi
+file=ms-abort.yaml
+sed 's/SERVICE_NAME/'${SERVICE_NAME}'/g' $file | sed 's/ABORT_PERCENTAGE/'${PERCENTAGE}'/g'
 
 echo "SERVICE_NAME=${SERVICE_NAME}"
 echo "PERCENTAGE=${PERCENTAGE}"
