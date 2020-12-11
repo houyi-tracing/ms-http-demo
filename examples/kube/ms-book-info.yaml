@@ -265,14 +265,14 @@ spec:
             - containerPort: 80
 ---
 
-# service Product Page
+# service Front-end
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-book-info-product-page
+  name: ms-book-info-frontend
   labels:
-    app: ms-book-info-product-page
-    service: ms-book-info-product-page
+    app: ms-book-info-frontend
+    service: ms-book-info-frontend
 spec:
   type: NodePort
   ports:
@@ -280,25 +280,25 @@ spec:
       name: http
       nodePort: 30002
   selector:
-    app: ms-book-info-product-page
+    app: ms-book-info-frontend
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-book-info-product-page-v1
+  name: ms-book-info-frontend-v1
   labels:
-    app: ms-book-info-product-page
+    app: ms-book-info-frontend
     version: v1
 spec:
   selector:
     matchLabels:
-      app: ms-book-info-product-page
+      app: ms-book-info-frontend
       version: v1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ms-book-info-product-page
+        app: ms-book-info-frontend
         version: v1
     spec:
       serviceAccountName: ms-book-info
@@ -318,7 +318,7 @@ spec:
           args: ["info", "http://${MS_BOOK_INFO_REVIEWS_SERVICE_HOST}:${MS_BOOK_INFO_REVIEWS_SERVICE_PORT}/api/do", "http://${MS_BOOK_INFO_DETAILS_SERVICE_HOST}:${MS_BOOK_INFO_DETAILS_SERVICE_PORT}/api/do"]
           env:
             - name: SERVICE_NAME
-              value: "ms-book-info-product-page"
+              value: "ms-book-info-frontend"
             - name: HTTP_ROUTE
               value: "/api/frontend"
           ports:

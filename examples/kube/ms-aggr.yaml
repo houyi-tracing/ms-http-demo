@@ -184,10 +184,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-aggr-aggregator
+  name: ms-aggr-frontend
   labels:
-    app: ms-aggr-aggregator
-    service: ms-aggr-aggregator
+    app: ms-aggr-frontend
+    service: ms-aggr-frontend
 spec:
   type: NodePort
   ports:
@@ -195,26 +195,26 @@ spec:
       name: http
       nodePort: 30001
   selector:
-    app: ms-aggr-aggregator
+    app: ms-aggr-frontend
 ---
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-aggr-aggregator-v1
+  name: ms-aggr-frontend-v1
   labels:
-    app: ms-aggr-aggregator
+    app: ms-aggr-frontend
     version: v1
 spec:
   selector:
     matchLabels:
-      app: ms-aggr-aggregator
+      app: ms-aggr-frontend
       version: v1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ms-aggr-aggregator
+        app: ms-aggr-frontend
         version: v1
     spec:
       serviceAccountName: ms-aggr
@@ -234,7 +234,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: SERVICE_NAME
-              value: "ms-aggr-aggregator"
+              value: "ms-aggr-frontend"
             - name: HTTP_ROUTE
               value: "/api/frontend"
           ports:
