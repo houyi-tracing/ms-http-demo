@@ -5,7 +5,6 @@ metadata:
 spec:
   selector:
     istio: ingressgateway
-    app: ms-aggr-frontend
   servers:
     - port:
         number: 80
