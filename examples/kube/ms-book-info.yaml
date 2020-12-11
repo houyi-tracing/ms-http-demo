@@ -313,10 +313,10 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://${MS_BOOK_INFO_REVIEWS_SERVICE_HOST}:${MS_BOOK_INFO_REVIEWS_SERVICE_PORT}/api/do", "http://${MS_BOOK_INFO_DETAILS_SERVICE_HOST}:${MS_BOOK_INFO_DETAILS_SERVICE_PORT}/api/do" ]
+          args: ["info", "http://${MS_BOOK_INFO_REVIEWS_SERVICE_HOST}:${MS_BOOK_INFO_REVIEWS_SERVICE_PORT}/api/do", "http://${MS_BOOK_INFO_DETAILS_SERVICE_HOST}:${MS_BOOK_INFO_DETAILS_SERVICE_PORT}/api/do"]
           env:
             - name: SERVICE_NAME
-              value: "ms-book-info-product-page
+              value: "ms-book-info-product-page"
             - name: HTTP_ROUTE
               value: "/api/frontend"
           ports:
