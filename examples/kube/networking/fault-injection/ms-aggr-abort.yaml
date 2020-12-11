@@ -1,14 +1,14 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: ms-aggr-frontend
+  name: ms-aggr-a
 spec:
   hosts:
-    - ms-aggr-frontend
+    - ms-aggr-a
   http:
     - match:
         - uri:
-            prefix: /api/v1/ms-aggr/frontend
+            prefix: /api/v1/ms-aggr/a
       fault:
         abort:
           percentage:
@@ -16,7 +16,7 @@ spec:
           httpStatus: 500
       route:
         - destination:
-            host: ms-aggr-frontend
+            host: ms-aggr-a
             port:
               number: 80
             subset: v1
