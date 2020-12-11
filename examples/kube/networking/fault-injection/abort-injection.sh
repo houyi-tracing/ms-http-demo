@@ -9,7 +9,7 @@ if [[ -z $SERVICE_NAME ]]; then
 fi
 
 file=ms-abort.yaml
-sed 's/SERVICE_NAME/'${SERVICE_NAME}'/g' $file | sed 's/ABORT_PERCENTAGE/'${PERCENTAGE}'/g'
+sed 's/SERVICE_NAME/'${SERVICE_NAME}'/g' $file | sed 's/ABORT_PERCENTAGE/'${PERCENTAGE}'/g' | kubectl apply -f -
 
 echo "SERVICE_NAME=${SERVICE_NAME}"
 echo "PERCENTAGE=${PERCENTAGE}"
