@@ -13,6 +13,6 @@ cd ~/github/ms-http-demo/examples/kube/
 git pull
 files=$(ls ./ | grep "^ms-.*\.yaml$")
 for f in $files; do
-  sed -i 's/\"info\"/\"'${log_level}'\"' $f
+  sed -i 's/\"info\"/\"'${log_level}'\"/g' $f
   kubectl apply -f $f
 done
