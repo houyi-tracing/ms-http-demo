@@ -20,7 +20,7 @@ metadata:
   name: ms-aggr-virtual-service
 spec:
   hosts:
-    - "*"
+    - ms-aggr-frontend
   gateways:
     - ms-aggr-gateway
   http:
