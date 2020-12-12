@@ -10,7 +10,7 @@ spec:
   http:
     - match:
         - uri:
-            prefix: /api/frontend
+            prefix: URI
       fault:
         abort:
           percentage:
