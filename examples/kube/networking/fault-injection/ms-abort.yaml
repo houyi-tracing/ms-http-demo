@@ -5,12 +5,10 @@ metadata:
 spec:
   hosts:
     - SERVICE_NAME
-  gateways:
-    - SERVICE_NAME
   http:
     - match:
         - uri:
-            prefix: URI
+            prefix: /api/v1/ROOT_SERVICE/OPERATION
       fault:
         abort:
           percentage:
