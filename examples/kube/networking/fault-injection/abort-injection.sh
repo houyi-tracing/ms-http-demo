@@ -9,13 +9,8 @@ if [[ -z $SERVICE_NAME ]]; then
 fi
 
 arr=(${SERVICE_NAME//-/ })
-echo ${arr[@]}
-
 ROOT_SERVICE=${arr[0]}-${arr[1]}
 OPERATION=${arr[2]}
-
-echo $ROOT_SERVICE
-echo $OPERATION
 
 file=ms-abort.yaml
 sed 's/SERVICE_NAME/'${SERVICE_NAME}'/g' $file | \
