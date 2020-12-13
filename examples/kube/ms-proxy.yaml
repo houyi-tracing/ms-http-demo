@@ -228,12 +228,18 @@ spec:
               value: "ms-proxy-frontend"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-proxy/frontend"
-            - name: SAMPLER_TYPE
-              value: "dynamic"
-            - name: LOG_LEVEL
-              value: "debug"
             - name: CALLING_URLS
               value: "http://ms-proxy-a/api/v1/ms-proxy/a,http://ms-proxy-b/api/v1/ms-proxy/b,http://ms-proxy-c/api/v1/ms-proxy/c"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
+            - name: LOG_LEVEL
+              value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
           ports:
             - containerPort: 80
 ---
