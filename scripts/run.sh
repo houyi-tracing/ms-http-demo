@@ -2,7 +2,7 @@
 
 ROOT_CMD="./main"
 
-fi [[ $SERVICE_NAME ]]; then
+if [[ $SERVICE_NAME ]]; then
   ROOT_CMD="${ROOT_CMD} --service.name=${SERVICE_NAME}"
 else
   echo "\$SERVICE_NAME must be set"
@@ -13,7 +13,7 @@ if [[ $LOG_LEVEL ]]; then
   ROOT_CMD="${ROOT_CMD} --log.level=${LOG_LEVEL}"
 fi
 
-if [[ $SAMPLER_TYPE ]; then
+if [[ $SAMPLER_TYPE ]]; then
   ROOT_CMD="${ROOT_CMD} --sampler.type=${SAMPLER_TYPE}"
 fi
 
