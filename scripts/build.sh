@@ -16,7 +16,7 @@ fi
 echo "OS=${OS}"
 echo "ARCH=${ARCH}"
 
-WORK_DIR=.
+WORK_DIR=../
 BUILD_OUT_DIR=~/houyi/ms/http
 
 mkdir -p ${BUILD_OUT_DIR}
