@@ -43,3 +43,5 @@ WORKDIR /opt/ms/
 ENTRYPOINT ["/opt/ms/${RUN_SHELL}"]
 EOF
 mv Dockerfile ${BUILD_OUT_DIR}/
+
+cp ${WORK_DIR}/examples ${BUILD_OUT_DIR}/
