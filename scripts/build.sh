@@ -28,6 +28,7 @@ cp ${RUN_SHELL} ${BUILD_OUT_DIR}/
 
 BUILD_DOCKER=build-docker.sh
 cat <<EOF > ${BUILD_DOCKER}
+#!/bin/bash
 docker build -t houyitracing/ms-http .
 EOF
 chmod u+x ${BUILD_DOCKER}
