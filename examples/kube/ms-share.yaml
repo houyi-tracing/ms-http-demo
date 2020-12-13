@@ -22,7 +22,6 @@ spec:
   selector:
     app: ms-share-d
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -45,7 +44,7 @@ spec:
       serviceAccountName: ms-share
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -56,12 +55,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-d"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-share/d"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -103,7 +103,7 @@ spec:
       serviceAccountName: ms-share
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -114,12 +114,15 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-share-d/api/v1/ms-share/d" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-c"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-share/c"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-share-d/api/v1/ms-share/d"
           ports:
             - containerPort: 80
 ---
@@ -161,7 +164,7 @@ spec:
       serviceAccountName: ms-share
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -172,12 +175,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-b"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-share/b"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -219,7 +223,7 @@ spec:
       serviceAccountName: ms-share
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -230,12 +234,15 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-share-b/api/v1/ms-share/b", "http://ms-share-c/api/v1/ms-share/c" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-a"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-share/a"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-share-b/api/v1/ms-share/b,http://ms-share-c/api/v1/ms-share/c"
           ports:
             - containerPort: 80
 ---
@@ -277,7 +284,7 @@ spec:
       serviceAccountName: ms-share
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -288,12 +295,17 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-share-a", "http://ms-share-c/api/v1/ms-share/c" ]
           env:
             - name: SERVICE_NAME
               value: "ms-share-frontend"
             - name: HTTP_ROUTE
               value: "/api/v1/share/frontend"
+            - name: SAMPLER_TYPE
+              value: "dynamic"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-share-a/api/v1/ms-share/a,http://ms-share-c/api/v1/ms-share/c"
           ports:
             - containerPort: 80
 ---

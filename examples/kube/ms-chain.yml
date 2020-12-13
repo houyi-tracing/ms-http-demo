@@ -44,7 +44,7 @@ spec:
       serviceAccountName: ms-chain
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -55,12 +55,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-chain-c"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-chain/c"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -102,7 +103,7 @@ spec:
       serviceAccountName: ms-chain
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -113,12 +114,15 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-chain-c/api/v1/ms-chain/c" ]
           env:
             - name: SERVICE_NAME
               value: "ms-chain-b"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-chain/b"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-chain-c/api/v1/ms-chain/c"
           ports:
             - containerPort: 80
 ---
@@ -160,7 +164,7 @@ spec:
       serviceAccountName: ms-chain
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -171,12 +175,15 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-chain-b/api/v1/ms-chain/b" ]
           env:
             - name: SERVICE_NAME
               value: "ms-chain-a"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-chain/a"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-chain-b/api/v1/ms-chain/b"
           ports:
             - containerPort: 80
 ---
@@ -218,7 +225,7 @@ spec:
       serviceAccountName: ms-chain
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -229,12 +236,17 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-chain-a/api/v1/ms-chain/a" ]
           env:
             - name: SERVICE_NAME
               value: "ms-chain-frontend"
             - name: HTTP_ROUTE
               value: "/api/v1/chain/frontend"
+            - name: SAMPLER_TYPE
+              value: "dynamic"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-chain-a/api/v1/ms-chain/a"
           ports:
             - containerPort: 80
 ---

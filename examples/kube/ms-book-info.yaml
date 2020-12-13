@@ -44,7 +44,7 @@ spec:
       serviceAccountName: ms-book-info
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -55,12 +55,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-book-info-ratings"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-book-info/ratings"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -102,7 +103,7 @@ spec:
       serviceAccountName: ms-book-info
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -113,12 +114,15 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-book-info-ratings/api/v1/book-info/ratings" ]
           env:
             - name: SERVICE_NAME
               value: "ms-book-info-reviews"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-book-info/reviews"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-book-info-ratings/api/v1/book-info/ratings"
           ports:
             - containerPort: 80
 
@@ -145,7 +149,7 @@ spec:
       serviceAccountName: ms-book-info
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -156,12 +160,15 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-book-info-ratings/api/v1/book-info/ratings" ]
           env:
             - name: SERVICE_NAME
               value: "ms-book-info-reviews"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-book-info/reviews"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-book-info-ratings/api/v1/book-info/ratings"
           ports:
             - containerPort: 80
 ---
@@ -187,7 +194,7 @@ spec:
       serviceAccountName: ms-book-info
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -198,12 +205,15 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-book-info-ratings/api/v1/book-info/ratings" ]
           env:
             - name: SERVICE_NAME
               value: "ms-book-info-reviews"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-book-info/reviews"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-book-info-ratings/api/v1/book-info/ratings"
           ports:
             - containerPort: 80
 ---
@@ -245,7 +255,7 @@ spec:
       serviceAccountName: ms-book-info
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -256,12 +266,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-book-info-details"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-book-info/details"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -303,7 +314,7 @@ spec:
       serviceAccountName: ms-book-info
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -314,12 +325,17 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-book-info-reviews/api/v1/ms-book-info/reviews", "http://ms-book-info-details/api/v1/ms-book-info/details" ]
           env:
             - name: SERVICE_NAME
               value: "ms-book-info-frontend"
             - name: HTTP_ROUTE
               value: "/api/v1/book-info/frontend"
+            - name: SAMPLER_TYPE
+              value: "dynamic"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-book-info-reviews/api/v1/ms-book-info/reviews,http://ms-book-info-details/api/v1/ms-book-info/details"
           ports:
             - containerPort: 80
 ---

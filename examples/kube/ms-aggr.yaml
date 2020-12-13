@@ -44,7 +44,7 @@ spec:
       serviceAccountName: ms-aggr
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -55,12 +55,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-aggr-a"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-aggr/a"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -102,7 +103,7 @@ spec:
       serviceAccountName: ms-aggr
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -113,12 +114,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-aggr-b"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-aggr/b"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -160,7 +162,7 @@ spec:
       serviceAccountName: ms-aggr
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -171,12 +173,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-aggr-c"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-aggr/c"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -218,7 +221,7 @@ spec:
       serviceAccountName: ms-aggr
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -228,13 +231,16 @@ spec:
             - containerPort: 14271
         - name: ms-http
           image: houyitracing/ms-http
-          args: [ "info", "http://ms-aggr-a/api/v1/ms-aggr/a", "http://ms-aggr-b/api/v1/ms-aggr/b", "http://ms-aggr-c/api/v1/ms-aggr/c" ]
           imagePullPolicy: IfNotPresent
           env:
             - name: SERVICE_NAME
               value: "ms-aggr-frontend"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-aggr/frontend"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-aggr-a/api/v1/ms-aggr/a,http://ms-aggr-b/api/v1/ms-aggr/b,http://ms-aggr-c/api/v1/ms-aggr/c"
           ports:
             - containerPort: 80
 ---

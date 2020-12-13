@@ -41,7 +41,7 @@ spec:
       serviceAccountName: ms-proxy
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -52,12 +52,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-proxy-a"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-proxy/a"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -97,7 +98,7 @@ spec:
       serviceAccountName: ms-proxy
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -108,12 +109,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-proxy-b"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-proxy/b"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -153,7 +155,7 @@ spec:
       serviceAccountName: ms-proxy
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -164,12 +166,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-proxy-c"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-proxy/c"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -209,7 +212,7 @@ spec:
       serviceAccountName: ms-proxy
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -219,13 +222,18 @@ spec:
             - containerPort: 14271
         - name: ms-http
           image: houyitracing/ms-http
-          args: [ "info", "http://ms-proxy-a/api/v1/ms-proxy/a", "http://ms-proxy-b/api/v1/ms-proxy/b", "http://ms-proxy-c/api/v1/ms-proxy/c" ]
           imagePullPolicy: IfNotPresent
           env:
             - name: SERVICE_NAME
               value: "ms-proxy-frontend"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-proxy/frontend"
+            - name: SAMPLER_TYPE
+              value: "dynamic"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-proxy-a/api/v1/ms-proxy/a,http://ms-proxy-b/api/v1/ms-proxy/b,http://ms-proxy-c/api/v1/ms-proxy/c"
           ports:
             - containerPort: 80
 ---

@@ -45,7 +45,7 @@ spec:
       serviceAccountName: ms-cdb
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -56,12 +56,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-cdb-db"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-cdb/db"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -103,7 +104,7 @@ spec:
       serviceAccountName: ms-cdb
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -114,12 +115,15 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-cdb-db/api/v1/ms-cdb/db" ]
           env:
             - name: SERVICE_NAME
               value: "ms-cdb-d"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-cdb/d"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-cdb-db/api/v1/ms-cdb/db"
           ports:
             - containerPort: 80
 ---
@@ -161,7 +165,7 @@ spec:
       serviceAccountName: ms-cdb
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -172,12 +176,15 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-cdb-db/api/v1/ms-cdb/db" ]
           env:
             - name: SERVICE_NAME
               value: "ms-cdb-c"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-cdb/c"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-cdb-db/api/v1/ms-cdb/db"
           ports:
             - containerPort: 80
 ---
@@ -219,7 +226,7 @@ spec:
       serviceAccountName: ms-cdb
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -230,12 +237,13 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info" ]
           env:
             - name: SERVICE_NAME
               value: "ms-cdb-b"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-cdb/b"
+            - name: LOG_LEVEL
+              value: "debug"
           ports:
             - containerPort: 80
 ---
@@ -277,7 +285,7 @@ spec:
       serviceAccountName: ms-cdb
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -288,12 +296,15 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-cdb-c/api/v1/ms-cdb/c", "http://ms-cdb-d/api/v1/ms-cdb/d" ]
           env:
             - name: SERVICE_NAME
               value: "ms-cdb-a"
             - name: HTTP_ROUTE
               value: "/api/v1/cdb/a"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-cdb-c/api/v1/ms-cdb/c,http://ms-cdb-d/api/v1/ms-cdb/d"
           ports:
             - containerPort: 80
 ---
@@ -335,7 +346,7 @@ spec:
       serviceAccountName: ms-cdb
       containers:
         - name: houyi-agent
-          image: houyitracing/houyi-agent
+          image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5775
@@ -346,12 +357,15 @@ spec:
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
-          args: [ "info", "http://ms-cdb-a/api/v1/ms-cdb/a", "http://ms-cdb-b/api/v1/ms-cdb/b" ]
           env:
             - name: SERVICE_NAME
               value: "ms-cdb-frontend"
             - name: HTTP_ROUTE
               value: "/api/v1/cdb/frontend"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: CALLING_URLS
+              value: "http://ms-cdb-a/api/v1/ms-cdb/a,http://ms-cdb-b/api/v1/ms-cdb/b"
           ports:
             - containerPort: 80
 ---
