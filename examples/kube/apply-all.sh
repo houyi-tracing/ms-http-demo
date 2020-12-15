@@ -20,7 +20,7 @@ else
     fi
     ;;
   "const")
-    ALWAYS_SAMPLE ]]; then
+    if [[ $ALWAYS_SAMPLE ]]; then
       echo "ALWAYS_SAMPLE must be set while using const sampler"
       exit 0
     else
@@ -48,10 +48,10 @@ echo "SAMPLER_TYPE=${SAMPLER_TYPE}"
 cd ~/github/ms-http-demo/examples/kube/
 files=$(ls ./ | grep "^ms-.*\.yaml$")
 for f in $files; do
-  sed 's/LOG_LEVEL/'${LOG_LEVEL}'/g' $f | \
-  sed 's/SAMPLER_TYPE/'${SAMPLER_TYPE}'/g' | \
-  sed 's/SAMPLING_RATE/'${SAMPLING_RATE}'/g' | \
-  ALWAYS_SAMPLE}'/g' | \
-  sed 's/MAX_TRACES_PER_SECOND/'${MAX_TRACES_PER_SECOND}'/g' | \
+  sed 's/log_level/'${LOG_LEVEL}'/g' $f | \
+  sed 's/sampler_type/'${SAMPLER_TYPE}'/g' | \
+  sed 's/sampling_rate/'${SAMPLING_RATE}'/g' | \
+  sed 's/always_sample/'${ALWAYS_SAMPLE}'/g' | \
+  sed 's/max_traces_per_second/'${MAX_TRACES_PER_SECOND}'/g' | \
   kubectl apply -f -
 done
