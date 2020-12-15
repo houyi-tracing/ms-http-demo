@@ -60,8 +60,16 @@ spec:
               value: "ms-share-d"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-share/d"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
           ports:
             - containerPort: 80
 ---
@@ -119,8 +127,16 @@ spec:
               value: "ms-share-c"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-share/c"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
             - name: CALLING_URLS
               value: "http://ms-share-d/api/v1/ms-share/d"
           ports:
@@ -180,8 +196,16 @@ spec:
               value: "ms-share-b"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-share/b"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
           ports:
             - containerPort: 80
 ---
@@ -239,8 +263,16 @@ spec:
               value: "ms-share-a"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-share/a"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
             - name: CALLING_URLS
               value: "http://ms-share-b/api/v1/ms-share/b,http://ms-share-c/api/v1/ms-share/c"
           ports:

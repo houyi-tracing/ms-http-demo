@@ -60,8 +60,16 @@ spec:
               value: "ms-tree-e"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-tree/e"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
           ports:
             - containerPort: 80
 ---
@@ -119,8 +127,16 @@ spec:
               value: "ms-tree-d"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-tree/d"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
           ports:
             - containerPort: 80
 ---
@@ -178,8 +194,16 @@ spec:
               value: "ms-tree-c"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-tree/c"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
           ports:
             - containerPort: 80
 ---
@@ -237,8 +261,16 @@ spec:
               value: "ms-tree-b"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-tree/b"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
             - name: CALLING_URLS
               value: "http://ms-tree-c/api/v1/ms-tree/c,http://ms-tree-d/api/v1/ms-tree/d"
           ports:
@@ -298,8 +330,16 @@ spec:
               value: "ms-tree-a"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-tree/a"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
             - name: CALLING_URLS
               value: "http://ms-tree-b/api/v1/ms-tree/b,http://ms-tree-e/api/v1/ms-tree/e"
           ports:

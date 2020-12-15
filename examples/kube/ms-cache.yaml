@@ -61,8 +61,16 @@ spec:
               value: "ms-cdb-db"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-cdb/db"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
           ports:
             - containerPort: 80
 ---
@@ -120,8 +128,16 @@ spec:
               value: "ms-cdb-d"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-cdb/d"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
             - name: CALLING_URLS
               value: "http://ms-cdb-db/api/v1/ms-cdb/db"
           ports:
@@ -181,8 +197,16 @@ spec:
               value: "ms-cdb-c"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-cdb/c"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
             - name: CALLING_URLS
               value: "http://ms-cdb-db/api/v1/ms-cdb/db"
           ports:
@@ -242,8 +266,16 @@ spec:
               value: "ms-cdb-b"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-cdb/b"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
           ports:
             - containerPort: 80
 ---
@@ -301,8 +333,16 @@ spec:
               value: "ms-cdb-a"
             - name: HTTP_ROUTE
               value: "/api/v1/cdb/a"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
             - name: CALLING_URLS
               value: "http://ms-cdb-c/api/v1/ms-cdb/c,http://ms-cdb-d/api/v1/ms-cdb/d"
           ports:

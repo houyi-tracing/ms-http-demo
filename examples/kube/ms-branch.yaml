@@ -60,8 +60,16 @@ spec:
               value: "ms-branch-d"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-branch/d"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
           ports:
             - containerPort: 80
 ---
@@ -119,8 +127,16 @@ spec:
               value: "ms-branch-c"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-branch/c"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
             - name: CALLING_URLS
               value: "http://ms-branch-d/api/v1/ms-branch/d"
           ports:
@@ -180,8 +196,16 @@ spec:
               value: "ms-branch-b"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-branch/b"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
           ports:
             - containerPort: 80
 ---
@@ -239,8 +263,16 @@ spec:
               value: "ms-branch-a"
             - name: HTTP_ROUTE
               value: "/api/v1/ms-branch/a"
+            - name: SAMPLER_TYPE
+              value: "sampler_type"
             - name: LOG_LEVEL
               value: "log_level"
+            - name: MAX_TRACES_PER_SECOND
+              value: "max_traces_per_second"
+            - name: ALWAYS_SAMPLE
+              value: "always_sample"
+            - name: SAMPLING_RATE
+              value: "sampling_rate"
             - name: CALLING_URLS
               value: "http://ms-branch-b/api/v1/ms-branch/b,http://ms-branch-c/api/v1/ms-branch/c"
           ports:
