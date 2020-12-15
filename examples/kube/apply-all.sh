@@ -4,43 +4,36 @@ if [[ -z $LOG_LEVEL ]]; then
   LOG_LEVEL=info
 fi
 
-if [[ $SAMPLER_TYPE ]]; then
+case $SAMPLER_TYPE in
+"prob")
+  if [[ $SAMPLING_RATE ]]; then
+    echo "SAMPLING_RATE=${SAMPLING_RATE}"
+  else
+    SAMPLING_RATE=1
+    echo "SAMPLING_RATE=${SAMPLING_RATE} (default)"
+  fi
+  ;;
+"const")
+  if [[ $ALWAYS_SAMPLE ]]; then
+    echo "ALWAYS_SAMPLE=${ALWAYS_SAMPLE}"
+  else
+    ALWAYS_SAMPLE=true
+    echo "ALWAYS_SAMPLE=${ALWAYS_SAMPLE} (default)"
+  fi
+  ;;
+"rate-limit")
+  if [[ $MAX_TRACES_PER_SECOND ]]; then
+    echo "MAX_TRACES_PER_SECOND=${MAX_TRACES_PER_SECOND}"
+  else
+    MAX_TRACES_PER_SECOND=50
+    echo "MAX_TRACES_PER_SECOND=${MAX_TRACES_PER_SECOND} (default)"
+  fi
+  ;;
+*)
   SAMPLER_TYPE=dynamic
-  echo "Using default sampler type: dynamic"
-else
-  case $SAMPLER_TYPE in
-  "dynamic")
-    ;;
-  "prob")
-    if [[ $SAMPLING_RATE ]]; then
-      echo "SAMPLING_RATE must be set while using probability sampler"
-      exit 0
-    else
-      echo "SAMPLING_RATE=${SAMPLING_RATE}"
-    fi
-    ;;
-  "const")
-    if [[ $ALWAYS_SAMPLE ]]; then
-      echo "ALWAYS_SAMPLE must be set while using const sampler"
-      exit 0
-    else
-      echo "ALWAYS_SAMPLE=${ALWAYS_SAMPLE}"
-    fi
-    ;;
-    "rate-limit")
-    if [[ $MAX_TRACES_PER_SECOND ]]; then
-      echo "MAX_TRACES_PER_SECOND must be set while using rate-limit sampler"
-      exit 0
-    else
-      echo "MAX_TRACES_PER_SECOND=${MAX_TRACES_PER_SECOND}"
-    fi
-    ;;
-    *)
-      echo "Unsupported sampler type: ${SAMPLER_TYPE}"
-      exit 0
-    ;;
-    esac
-fi
+  echo "Using default sampler type: ${SAMPLER_TYPE}"
+  ;;
+esac
 
 echo "LOG_LEVEL=${LOG_LEVEL}"
 echo "SAMPLER_TYPE=${SAMPLER_TYPE}"
