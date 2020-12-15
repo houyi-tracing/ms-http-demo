@@ -264,7 +264,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-chain-frontend"
             - name: HTTP_ROUTE
-              value: "/api/v1/chain/frontend"
+              value: "/api/v1/ms-chain/frontend"
             - name: CALLING_URLS
               value: "http://ms-chain-a/api/v1/ms-chain/a"
             - name: SAMPLER_TYPE

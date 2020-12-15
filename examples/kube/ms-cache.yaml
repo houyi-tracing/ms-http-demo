@@ -332,7 +332,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-cdb-a"
             - name: HTTP_ROUTE
-              value: "/api/v1/cdb/a"
+              value: "/api/v1/ms-cdb/a"
             - name: SAMPLER_TYPE
               value: "sampler_type"
             - name: LOG_LEVEL
@@ -401,7 +401,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-cdb-frontend"
             - name: HTTP_ROUTE
-              value: "/api/v1/cdb/frontend"
+              value: "/api/v1/ms-cdb/frontend"
             - name: CALLING_URLS
               value: "http://ms-cdb-a/api/v1/ms-cdb/a,http://ms-cdb-b/api/v1/ms-cdb/b"
             - name: SAMPLER_TYPE

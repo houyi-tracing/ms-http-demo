@@ -331,7 +331,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-share-frontend"
             - name: HTTP_ROUTE
-              value: "/api/v1/share/frontend"
+              value: "/api/v1/ms-share/frontend"
             - name: CALLING_URLS
               value: "http://ms-share-a/api/v1/ms-share/a,http://ms-share-c/api/v1/ms-share/c"
             - name: SAMPLER_TYPE

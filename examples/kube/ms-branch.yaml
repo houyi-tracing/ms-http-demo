@@ -331,7 +331,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-branch-frontend"
             - name: HTTP_ROUTE
-              value: "/api/v1/branch/frontend"
+              value: "/api/v1/ms-branch/frontend"
             - name: CALLING_URLS
               value: "http://ms-branch-a/api/v1/ms-branch/a"
             - name: SAMPLER_TYPE

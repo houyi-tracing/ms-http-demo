@@ -398,7 +398,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-tree-frontend"
             - name: HTTP_ROUTE
-              value: "/api/v1/tree/frontend"
+              value: "/api/v1/ms-tree/frontend"
             - name: CALLING_URLS
               value: "http://ms-tree-a/api/v1/ms-tree/a"
             - name: SAMPLER_TYPE
