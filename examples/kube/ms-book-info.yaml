@@ -369,7 +369,7 @@ spec:
             - name: SERVICE_NAME
               value: "ms-book-info-frontend"
             - name: HTTP_ROUTE
-              value: "/api/v1/book-info/frontend"
+              value: "/api/v1/ms-book-info/frontend"
             - name: CALLING_URLS
               value: "http://ms-book-info-reviews/api/v1/ms-book-info/reviews,http://ms-book-info-details/api/v1/ms-book-info/details"
             - name: SAMPLER_TYPE
