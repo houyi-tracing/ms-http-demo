@@ -61,7 +61,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-branch/d"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
           ports:
             - containerPort: 80
 ---
@@ -120,7 +120,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-branch/c"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
             - name: CALLING_URLS
               value: "http://ms-branch-d/api/v1/ms-branch/d"
           ports:
@@ -181,7 +181,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-branch/b"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
           ports:
             - containerPort: 80
 ---
@@ -240,7 +240,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-branch/a"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
             - name: CALLING_URLS
               value: "http://ms-branch-b/api/v1/ms-branch/b,http://ms-branch-c/api/v1/ms-branch/c"
           ports:

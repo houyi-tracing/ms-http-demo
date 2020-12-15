@@ -61,7 +61,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-aggr/a"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
           ports:
             - containerPort: 80
 ---
@@ -120,7 +120,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-aggr/b"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
           ports:
             - containerPort: 80
 ---
@@ -179,7 +179,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-aggr/c"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
           ports:
             - containerPort: 80
 ---

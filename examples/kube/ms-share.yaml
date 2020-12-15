@@ -61,7 +61,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-share/d"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
           ports:
             - containerPort: 80
 ---
@@ -120,7 +120,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-share/c"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
             - name: CALLING_URLS
               value: "http://ms-share-d/api/v1/ms-share/d"
           ports:
@@ -181,7 +181,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-share/b"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
           ports:
             - containerPort: 80
 ---
@@ -240,7 +240,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-share/a"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
             - name: CALLING_URLS
               value: "http://ms-share-b/api/v1/ms-share/b,http://ms-share-c/api/v1/ms-share/c"
           ports:

@@ -61,7 +61,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-tree/e"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
           ports:
             - containerPort: 80
 ---
@@ -120,7 +120,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-tree/d"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
           ports:
             - containerPort: 80
 ---
@@ -179,7 +179,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-tree/c"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
           ports:
             - containerPort: 80
 ---
@@ -238,7 +238,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-tree/b"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
             - name: CALLING_URLS
               value: "http://ms-tree-c/api/v1/ms-tree/c,http://ms-tree-d/api/v1/ms-tree/d"
           ports:
@@ -299,7 +299,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-tree/a"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
             - name: CALLING_URLS
               value: "http://ms-tree-b/api/v1/ms-tree/b,http://ms-tree-e/api/v1/ms-tree/e"
           ports:

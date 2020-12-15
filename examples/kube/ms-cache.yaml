@@ -62,7 +62,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-cdb/db"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
           ports:
             - containerPort: 80
 ---
@@ -121,7 +121,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-cdb/d"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
             - name: CALLING_URLS
               value: "http://ms-cdb-db/api/v1/ms-cdb/db"
           ports:
@@ -182,7 +182,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-cdb/c"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
             - name: CALLING_URLS
               value: "http://ms-cdb-db/api/v1/ms-cdb/db"
           ports:
@@ -243,7 +243,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/ms-cdb/b"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
           ports:
             - containerPort: 80
 ---
@@ -302,7 +302,7 @@ spec:
             - name: HTTP_ROUTE
               value: "/api/v1/cdb/a"
             - name: LOG_LEVEL
-              value: "debug"
+              value: "log_level"
             - name: CALLING_URLS
               value: "http://ms-cdb-c/api/v1/ms-cdb/c,http://ms-cdb-d/api/v1/ms-cdb/d"
           ports:
