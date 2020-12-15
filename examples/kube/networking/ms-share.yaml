@@ -1,0 +1,202 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: ms-share
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-share
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - ms-share
+  http:
+    - match:
+        - uri:
+            prefix: /api/v1/ms-share/frontend
+      route:
+        - destination:
+            host: ms-share-frontend
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-share/a
+      route:
+        - destination:
+            host: ms-share-a
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-share/b
+      route:
+        - destination:
+            host: ms-share-b
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-share/c
+      route:
+        - destination:
+            host: ms-share-c
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-share/d
+      route:
+        - destination:
+            host: ms-share-d
+            port:
+              number: 80
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-share-frontend
+spec:
+  hosts:
+    - ms-share-frontend
+  http:
+    - route:
+        - destination:
+            host: ms-share-frontend
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-share-a
+spec:
+  hosts:
+    - ms-share-a
+  http:
+    - route:
+        - destination:
+            host: ms-share-a
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-share-b
+spec:
+  hosts:
+    - ms-share-b
+  http:
+    - route:
+        - destination:
+            host: ms-share-b
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-share-c
+spec:
+  hosts:
+    - ms-share-c
+  http:
+    - route:
+        - destination:
+            host: ms-share-c
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-share-d
+spec:
+  hosts:
+    - ms-share-d
+  http:
+    - route:
+        - destination:
+            host: ms-share-d
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-share-a
+spec:
+  host: ms-share-a
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-share-b
+spec:
+  host: ms-share-b
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-share-c
+spec:
+  host: ms-share-c
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-share-d
+spec:
+  host: ms-share-d
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-share-frontend
+spec:
+  host: ms-share-frontend
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---

@@ -1,0 +1,237 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: ms-tree
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-tree
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - ms-tree
+  http:
+    - match:
+        - uri:
+            prefix: /api/v1/ms-tree/frontend
+      route:
+        - destination:
+            host: ms-tree-frontend
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-tree/a
+      route:
+        - destination:
+            host: ms-tree-a
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-tree/b
+      route:
+        - destination:
+            host: ms-tree-b
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-tree/c
+      route:
+        - destination:
+            host: ms-tree-c
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-tree/d
+      route:
+        - destination:
+            host: ms-tree-d
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-tree/e
+      route:
+        - destination:
+            host: ms-tree-e
+            port:
+              number: 80
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-tree-frontend
+spec:
+  hosts:
+    - ms-tree-frontend
+  http:
+    - route:
+        - destination:
+            host: ms-tree-frontend
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-tree-a
+spec:
+  hosts:
+    - ms-tree-a
+  http:
+    - route:
+        - destination:
+            host: ms-tree-a
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-tree-b
+spec:
+  hosts:
+    - ms-tree-b
+  http:
+    - route:
+        - destination:
+            host: ms-tree-b
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-tree-c
+spec:
+  hosts:
+    - ms-tree-c
+  http:
+    - route:
+        - destination:
+            host: ms-tree-c
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-tree-d
+spec:
+  hosts:
+    - ms-tree-d
+  http:
+    - route:
+        - destination:
+            host: ms-tree-d
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-tree-e
+spec:
+  hosts:
+    - ms-tree-e
+  http:
+    - route:
+        - destination:
+            host: ms-tree-e
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-tree-a
+spec:
+  host: ms-tree-a
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-tree-b
+spec:
+  host: ms-tree-b
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-tree-c
+spec:
+  host: ms-tree-c
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-tree-d
+spec:
+  host: ms-tree-d
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-tree-e
+spec:
+  host: ms-tree-e
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-tree-frontend
+spec:
+  host: ms-tree-frontend
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
