@@ -5,7 +5,7 @@ if [[ -z $LOG_LEVEL ]]; then
 fi
 
 case $SAMPLER_TYPE in
-"prob")
+"probability")
   if [[ $SAMPLING_RATE ]]; then
     echo "SAMPLING_RATE=${SAMPLING_RATE}"
   else
