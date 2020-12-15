@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: ms-book-info
+  name: ms-branch
 spec:
   selector:
     istio: ingressgateway
@@ -13,156 +13,188 @@ spec:
       hosts:
         - "*"
 ---
-# Virtual Services
+
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: ms-book-info
+  name: ms-branch
 spec:
   hosts:
     - "*"
   gateways:
-    - ms-book-info
+    - ms-branch
   http:
     - match:
         - uri:
-            prefix: /api/v1/ms-book-info/frontend
+            prefix: /api/v1/ms-branch/frontend
       route:
         - destination:
-            host: ms-book-info-frontend
+            host: ms-branch-frontend
             port:
               number: 80
             subset: v1
     - match:
         - uri:
-            prefix: /api/v1/ms-book-info/details
+            prefix: /api/v1/ms-branch/a
       route:
         - destination:
-            host: ms-book-info-details
+            host: ms-branch-a
             port:
               number: 80
             subset: v1
     - match:
         - uri:
-            prefix: /api/v1/ms-book-info/reviews
+            prefix: /api/v1/ms-branch/b
       route:
         - destination:
-            host: ms-book-info-reviews
+            host: ms-branch-b
             port:
               number: 80
             subset: v1
     - match:
         - uri:
-            prefix: /api/v1/ms-book-info/ratings
+            prefix: /api/v1/ms-branch/c
       route:
         - destination:
-            host: ms-book-info-ratings
+            host: ms-branch-c
             port:
               number: 80
             subset: v1
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: ms-book-info-frontend
-spec:
-  hosts:
-    - ms-book-info-frontend
-  http:
-    - route:
+    - match:
+        - uri:
+            prefix: /api/v1/ms-branch/d
+      route:
         - destination:
-            host: ms-book-info-frontend
-            subset: v1
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: ms-book-info-ratings
-spec:
-  hosts:
-    - ms-book-info-ratings
-  http:
-    - route:
-        - destination:
-            host: ms-book-info-ratings
-            subset: v1
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: ms-book-info-details
-spec:
-  hosts:
-    - ms-book-info-details
-  http:
-    - route:
-        - destination:
-            host: ms-book-info-details
-            subset: v1
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: ms-book-info-reviews
-spec:
-  hosts:
-    - ms-book-info-reviews
-  http:
-    - route:
-        - destination:
-            host: ms-book-info-reviews
+            host: ms-branch-d
+            port:
+              number: 80
             subset: v1
 ---
 
-# Destination Rules
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-branch-frontend
+spec:
+  hosts:
+    - ms-branch-frontend
+  http:
+    - route:
+        - destination:
+            host: ms-branch-frontend
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-branch-a
+spec:
+  hosts:
+    - ms-branch-a
+  http:
+    - route:
+        - destination:
+            host: ms-branch-a
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-branch-b
+spec:
+  hosts:
+    - ms-branch-b
+  http:
+    - route:
+        - destination:
+            host: ms-branch-b
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-branch-c
+spec:
+  hosts:
+    - ms-branch-c
+  http:
+    - route:
+        - destination:
+            host: ms-branch-c
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-branch-d
+spec:
+  hosts:
+    - ms-branch-d
+  http:
+    - route:
+        - destination:
+            host: ms-branch-d
+            subset: v1
+---
+
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: ms-book-info-ratings
+  name: ms-branch-a
 spec:
-  host: ms-book-info-ratings
+  host: ms-branch-a
   subsets:
     - name: v1
       labels:
         version: v1
 ---
+
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: ms-book-info-details
+  name: ms-branch-b
 spec:
-  host: ms-book-info-details
+  host: ms-branch-b
   subsets:
     - name: v1
       labels:
         version: v1
 ---
+
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: ms-book-info-reviews
+  name: ms-branch-c
 spec:
-  host: ms-book-info-reviews
-  trafficPolicy:
-    loadBalancer:
-      simple: RANDOM
+  host: ms-branch-c
   subsets:
     - name: v1
       labels:
         version: v1
-    - name: v2
-      labels:
-        version: v2
-    - name: v3
-      labels:
-        version: v3
 ---
+
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: ms-book-info-frontend
+  name: ms-branch-d
 spec:
-  host: ms-book-info-frontend
+  host: ms-branch-d
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-branch-frontend
+spec:
+  host: ms-branch-frontend
   subsets:
     - name: v1
       labels:
