@@ -39,7 +39,7 @@ echo "LOG_LEVEL=${LOG_LEVEL}"
 echo "SAMPLER_TYPE=${SAMPLER_TYPE}"
 
 cd ~/github/ms-http-demo/examples/kube/
-files=$(ls ./ | grep "^ms-.*\.yaml$")
+files=$(ls ./ | grep "^ms-\w*\.yaml$")
 for f in $files; do
   sed 's/log_level/'${LOG_LEVEL}'/g' $f | \
   sed 's/sampler_type/'${SAMPLER_TYPE}'/g' | \
