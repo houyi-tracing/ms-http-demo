@@ -9,7 +9,7 @@ if [[ -z $SERVICE ]]; then
   exit 0
 fi
 
-if [[ -z $OPEATION ]]; then
+if [[ -z $OPERATION ]]; then
   echo "OPERATION must be set"
   exit 0
 fi
@@ -19,7 +19,7 @@ if [[ -z $PERCENTAGE ]]; then
   exit 0
 fi
 
-file="ms-${SERVICE}-${OPERATION}.yaml"
+file="ms-abort-template.yaml"
 sed 's/SERVICE/'${SERVICE}'/g' $file | \
 sed 's/OPERATION/'${OPERATION}'/g' | \
 sed 's/PERCENTAGE/'${PERCENTAGE}'/g' | \
