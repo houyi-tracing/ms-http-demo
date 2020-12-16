@@ -1,24 +1,30 @@
 #!/bin/bash
 
-SERVICE_NAME=$1
-PERCENTAGE=$2
+SERVICE=$1
+OPERATION=$2
+PERCENTAGE=$3
 
-if [[ -z $SERVICE_NAME ]]; then
-  echo "Service name cannot be empty"
-  exit -1
+if [[ -z $SERVICE ]]; then
+  echo "SERVICE must be set"
+  exit 0
 fi
 
-arr=(${SERVICE_NAME//-/ })
-ROOT_SERVICE=${arr[0]}-${arr[1]}
-OPERATION=${arr[2]}
+if [[ -z $OPEATION ]]; then
+  echo "OPERATION must be set"
+  exit 0
+fi
 
-file=ms-abort.yaml
-sed 's/SERVICE_NAME/'${SERVICE_NAME}'/g' $file | \
-sed 's/ABORT_PERCENTAGE/'${PERCENTAGE}'/g' | \
-sed 's/ROOT_SERVICE/'${ROOT_SERVICE}'/g' | \
+if [[ -z $PERCENTAGE ]]; then
+  echo "PERCENTAGE must be set"
+  exit 0
+fi
+
+file="ms-${SERVICE}-${OPERATION}.yaml"
+sed 's/SERVICE/'${SERVICE}'/g' $file | \
 sed 's/OPERATION/'${OPERATION}'/g' | \
+sed 's/PERCENTAGE/'${PERCENTAGE}'/g' | \
 kubectl apply -f -
 
-echo "SERVICE_NAME=${SERVICE_NAME}"
+echo "SERVICE_NAME=${SERVICE}-${OPERATION}"
 echo "PERCENTAGE=${PERCENTAGE}"
 echo "Abort injection done"

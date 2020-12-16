@@ -1,21 +1,23 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: SERVICE_NAME
+  name: SERVICE-OPERATION
 spec:
   hosts:
-    - SERVICE_NAME
+    - SERVICE-OPERATION
   http:
     - match:
         - uri:
-            prefix: /api/v1/ROOT_SERVICE/OPERATION
+            prefix: /api/v1/SERVICE/OPERATION
       fault:
         abort:
           percentage:
-            value: ABORT_PERCENTAGE
+            value: PERCENTAGE
           httpStatus: 500
       route:
         - destination:
-            host: SERVICE_NAME
+            host: SERVICE-OPERATION
+            port:
+              number: 80
             subset: v1
 ---
