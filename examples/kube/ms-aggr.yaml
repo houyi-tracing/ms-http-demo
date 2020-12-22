@@ -16,8 +16,10 @@ metadata:
     service: ms-aggr-a
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-aggr-a
 ---
@@ -83,8 +85,10 @@ metadata:
     service: ms-aggr-b
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-aggr-b
 ---
@@ -150,8 +154,10 @@ metadata:
     service: ms-aggr-c
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-aggr-c
 ---
@@ -217,8 +223,10 @@ metadata:
     service: ms-aggr-frontend
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-aggr-frontend
 ---
