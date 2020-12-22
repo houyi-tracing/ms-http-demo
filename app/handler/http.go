@@ -85,8 +85,6 @@ func (h *httpHandler) handleFunc(
 }
 
 func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
-	h.logger.Debug("receive request", zap.String("remote address", r.RemoteAddr))
-
 	spanCtx, _ := h.tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(r.Header))
 	span := h.tracer.StartSpan(h.route, opentracing.StartTime(time.Now()), ext.RPCServerOption(spanCtx))
 	defer span.Finish()
@@ -136,10 +134,6 @@ func (h *httpHandler) mockHttpRequest(spanCtx opentracing.SpanContext, URL strin
 	if resp.StatusCode >= 400 {
 		ext.Error.Set(span, true)
 	}
-
-	h.logger.Debug("get response",
-		zap.String("URL", URL),
-		zap.Int("status_code", resp.StatusCode))
 
 	return nil
 }
