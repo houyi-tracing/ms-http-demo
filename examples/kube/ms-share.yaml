@@ -17,8 +17,10 @@ metadata:
     service: ms-share-d
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-share-d
 ---
@@ -84,8 +86,10 @@ metadata:
     service: ms-share-c
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-share-c
 ---
@@ -153,8 +157,10 @@ metadata:
     service: ms-share-b
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-share-b
 ---
@@ -220,8 +226,10 @@ metadata:
     service: ms-share-a
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-share-a
 ---
@@ -289,8 +297,10 @@ metadata:
     service: ms-share-frontend
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-share-frontend
 ---

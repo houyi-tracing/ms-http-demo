@@ -17,8 +17,10 @@ metadata:
     service: ms-book-info-ratings
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-book-info-ratings
 ---
@@ -84,8 +86,10 @@ metadata:
     service: ms-book-info-reviews
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-book-info-reviews
 ---
@@ -260,8 +264,10 @@ metadata:
     service: ms-book-info-details
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-book-info-details
 ---
@@ -327,8 +333,10 @@ metadata:
     service: ms-book-info-frontend
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-book-info-frontend
 ---

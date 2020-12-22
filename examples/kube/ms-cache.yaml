@@ -18,8 +18,10 @@ metadata:
     service: ms-cdb-db
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-cdb-db
 ---
@@ -85,8 +87,10 @@ metadata:
     service: ms-cdb-d
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-cdb-d
 ---
@@ -154,8 +158,10 @@ metadata:
     service: ms-cdb-c
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-cdb-c
 ---
@@ -223,8 +229,10 @@ metadata:
     service: ms-cdb-b
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-cdb-b
 ---
@@ -290,8 +298,10 @@ metadata:
     service: ms-cdb-a
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-cdb-a
 ---
@@ -359,8 +369,10 @@ metadata:
     service: ms-cdb-frontend
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-cdb-frontend
 ---

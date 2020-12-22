@@ -17,8 +17,10 @@ metadata:
     service: ms-branch-d
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-branch-d
 ---
@@ -84,8 +86,10 @@ metadata:
     service: ms-branch-c
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-branch-c
 ---
@@ -153,8 +157,10 @@ metadata:
     service: ms-branch-b
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-branch-b
 ---
@@ -220,8 +226,10 @@ metadata:
     service: ms-branch-a
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-branch-a
 ---
@@ -289,8 +297,10 @@ metadata:
     service: ms-branch-frontend
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-branch-frontend
 ---

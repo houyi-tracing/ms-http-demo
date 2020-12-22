@@ -17,8 +17,10 @@ metadata:
     service: ms-tree-e
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-tree-e
 ---
@@ -84,8 +86,10 @@ metadata:
     service: ms-tree-d
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-tree-d
 ---
@@ -151,8 +155,10 @@ metadata:
     service: ms-tree-c
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-tree-c
 ---
@@ -218,8 +224,10 @@ metadata:
     service: ms-tree-b
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-tree-b
 ---
@@ -287,8 +295,10 @@ metadata:
     service: ms-tree-a
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-tree-a
 ---
@@ -356,8 +366,10 @@ metadata:
     service: ms-tree-frontend
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-tree-frontend
 ---

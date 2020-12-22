@@ -79,8 +79,10 @@ metadata:
     service: ms-proxy-b
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-proxy-b
 ---
@@ -144,8 +146,10 @@ metadata:
     service: ms-proxy-c
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-proxy-c
 ---
@@ -209,8 +213,10 @@ metadata:
     service: ms-proxy-frontend
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-proxy-frontend
 ---

@@ -17,8 +17,10 @@ metadata:
     service: ms-chain-c
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-chain-c
 ---
@@ -84,8 +86,10 @@ metadata:
     service: ms-chain-b
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-chain-b
 ---
@@ -153,8 +157,10 @@ metadata:
     service: ms-chain-a
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-chain-a
 ---
@@ -222,8 +228,10 @@ metadata:
     service: ms-chain-frontend
 spec:
   ports:
-    - port: 80
-      name: http
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   selector:
     app: ms-chain-frontend
 ---
