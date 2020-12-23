@@ -15,7 +15,6 @@
 package handler
 
 import (
-	"fmt"
 	"github.com/gorilla/mux"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/jaegertracing/jaeger/cmd/query/app"
@@ -29,6 +28,7 @@ import (
 )
 
 type httpHandler struct {
+	serviceName  string
 	logger       *zap.Logger
 	tracer       opentracing.Tracer
 	route        string
@@ -39,6 +39,7 @@ type httpHandler struct {
 }
 
 type HttpHandlerParams struct {
+	ServiceName  string
 	Route        string
 	Logger       *zap.Logger
 	Tracer       opentracing.Tracer
@@ -48,6 +49,7 @@ type HttpHandlerParams struct {
 
 func NewHttpHandler(params *HttpHandlerParams) app.HTTPHandler {
 	ret := &httpHandler{
+		serviceName:  params.ServiceName,
 		route:        params.Route,
 		logger:       params.Logger,
 		tracer:       params.Tracer,
@@ -70,30 +72,40 @@ func (h *httpHandler) RegisterRoutes(router *mux.Router) {
 	//h.handleFunc(router, h.serveHttp, h.route).Methods(http.MethodGet)
 }
 
-func (h *httpHandler) handleFunc(
-	router *mux.Router,
-	f func(http.ResponseWriter, *http.Request),
-	route string,
-	_ ...interface{}) *mux.Route {
-	traceMiddleware := nethttp.Middleware(
-		h.tracer,
-		http.HandlerFunc(f),
-		nethttp.OperationNameFunc(func(r *http.Request) string {
-			return route
-		}))
-	return router.HandleFunc(route, traceMiddleware.ServeHTTP)
-}
+//func (h *httpHandler) handleFunc(
+//	router *mux.Router,
+//	f func(http.ResponseWriter, *http.Request),
+//	route string,
+//	_ ...interface{}) *mux.Route {
+//	traceMiddleware := nethttp.Middleware(
+//		h.tracer,
+//		http.HandlerFunc(f),
+//		nethttp.OperationNameFunc(func(r *http.Request) string {
+//			return route
+//		}))
+//	return router.HandleFunc(route, traceMiddleware.ServeHTTP)
+//}
 
 func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 	spanCtx, _ := h.tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(r.Header))
 	span := h.tracer.StartSpan(h.route, opentracing.StartTime(time.Now()), ext.RPCServerOption(spanCtx))
 	defer span.Finish()
 
+	pSvc := span.BaggageItem("x-b3-svc")
+	pOp := span.BaggageItem("x-b3-op")
+	if pSvc != "" && pOp != "" {
+		span.SetTag("parent_service", pSvc)
+		span.SetTag("parent_operation", pOp)
+	}
+
+	span.SetBaggageItem("x-b3-svc", h.serviceName)
+	span.SetBaggageItem("x-b3-op", h.route)
+
 	var wg sync.WaitGroup
 	for _, URL := range h.callingURLs {
 		if len(URL) != 0 {
 			wg.Add(1)
-			if err := h.mockHttpRequest(span.Context(), URL, &wg); err != nil {
+			if err := h.mockHttpRequest(span, URL, &wg); err != nil {
 				h.logger.Error("failed to get response", zap.Error(err))
 			}
 		}
@@ -101,20 +113,13 @@ func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 	wg.Wait()
 }
 
-func (h *httpHandler) mockHttpRequest(spanCtx opentracing.SpanContext, URL string, wg *sync.WaitGroup) error {
+func (h *httpHandler) mockHttpRequest(span opentracing.Span, URL string, wg *sync.WaitGroup) error {
 	defer wg.Done()
 
 	req, err := http.NewRequest(http.MethodGet, URL, nil)
 	if err != nil {
 		return err
 	}
-
-	span := h.tracer.StartSpan(fmt.Sprintf("call-%s", URL),
-		opentracing.Tags{
-			"user_agent": req.UserAgent(),
-		},
-		opentracing.ChildOf(spanCtx))
-	defer span.Finish()
 
 	// Set some tags on the clientSpan to annotate that it's the client span. The additional HTTP tags are useful for debugging purposes.
 	ext.SpanKindRPCClient.Set(span)

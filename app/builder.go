@@ -49,6 +49,7 @@ func NewApp(params *Params) *App {
 
 func (a *App) Start(appOptions *Options) error {
 	httpParams := server.HttpServerParams{
+		ServiceName: a.serviceName,
 		ServePort:   appOptions.HttpServePort,
 		Logger:      a.logger,
 		Tracer:      a.tracer,

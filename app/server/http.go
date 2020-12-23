@@ -27,6 +27,7 @@ import (
 )
 
 type HttpServerParams struct {
+	ServiceName string
 	ServePort   int
 	Route       string
 	CallingURLs []string
@@ -53,6 +54,7 @@ func serveHttp(server *http.Server, listener net.Listener, params *HttpServerPar
 
 	r := mux.NewRouter()
 	httpHandler := handler.NewHttpHandler(&handler.HttpHandlerParams{
+		ServiceName: params.ServiceName,
 		Logger:      params.Logger,
 		Tracer:      params.Tracer,
 		CallingURLs: params.CallingURLs,
