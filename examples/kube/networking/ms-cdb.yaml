@@ -1,0 +1,237 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: ms-cdb
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-cdb
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - ms-cdb
+  http:
+    - match:
+        - uri:
+            prefix: /api/v1/ms-cdb/frontend
+      route:
+        - destination:
+            host: ms-cdb-frontend
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-cdb/a
+      route:
+        - destination:
+            host: ms-cdb-a
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-cdb/b
+      route:
+        - destination:
+            host: ms-cdb-b
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-cdb/c
+      route:
+        - destination:
+            host: ms-cdb-c
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-cdb/d
+      route:
+        - destination:
+            host: ms-cdb-d
+            port:
+              number: 80
+            subset: v1
+    - match:
+        - uri:
+            prefix: /api/v1/ms-cdb/db
+      route:
+        - destination:
+            host: ms-cdb-db
+            port:
+              number: 80
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-cdb-frontend
+spec:
+  hosts:
+    - ms-cdb-frontend
+  http:
+    - route:
+        - destination:
+            host: ms-cdb-frontend
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-cdb-a
+spec:
+  hosts:
+    - ms-cdb-a
+  http:
+    - route:
+        - destination:
+            host: ms-cdb-a
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-cdb-b
+spec:
+  hosts:
+    - ms-cdb-b
+  http:
+    - route:
+        - destination:
+            host: ms-cdb-b
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-cdb-c
+spec:
+  hosts:
+    - ms-cdb-c
+  http:
+    - route:
+        - destination:
+            host: ms-cdb-c
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-cdb-d
+spec:
+  hosts:
+    - ms-cdb-d
+  http:
+    - route:
+        - destination:
+            host: ms-cdb-d
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ms-cdb-db
+spec:
+  hosts:
+    - ms-cdb-db
+  http:
+    - route:
+        - destination:
+            host: ms-cdb-db
+            subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-cdb-a
+spec:
+  host: ms-cdb-a
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-cdb-b
+spec:
+  host: ms-cdb-b
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-cdb-c
+spec:
+  host: ms-cdb-c
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-cdb-d
+spec:
+  host: ms-cdb-d
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-cdb-db
+spec:
+  host: ms-cdb-db
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: ms-cdb-frontend
+spec:
+  host: ms-cdb-frontend
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+---
