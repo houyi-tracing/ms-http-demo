@@ -122,9 +122,6 @@ func (h *httpHandler) mockHttpRequest(span opentracing.Span, URL string, wg *syn
 	}
 
 	// Set some tags on the clientSpan to annotate that it's the client span. The additional HTTP tags are useful for debugging purposes.
-	ext.SpanKindRPCClient.Set(span)
-	ext.HTTPUrl.Set(span, URL)
-	ext.HTTPMethod.Set(span, http.MethodGet)
 
 	if err := h.tracer.Inject(span.Context(), opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(req.Header)); err != nil {
 		return err
