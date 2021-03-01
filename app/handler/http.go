@@ -87,19 +87,14 @@ func (h *httpHandler) RegisterRoutes(router *mux.Router) {
 //}
 
 func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
-	spanCtx, _ := h.tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(r.Header))
-	span := h.tracer.StartSpan(h.route, opentracing.StartTime(time.Now()), ext.RPCServerOption(spanCtx))
-	defer span.Finish()
-
-	pSvc := span.BaggageItem("x-b3-svc")
-	pOp := span.BaggageItem("x-b3-op")
-	if pSvc != "" && pOp != "" {
-		span.SetTag("parent_service", pSvc)
-		span.SetTag("parent_operation", pOp)
+	var span opentracing.Span
+	spanCtx, err := h.tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(r.Header))
+	if err == opentracing.ErrSpanContextNotFound {
+		span = h.tracer.StartSpan(h.route, opentracing.StartTime(time.Now()))
+	} else {
+		span = h.tracer.StartSpan(h.route, opentracing.StartTime(time.Now()), opentracing.ChildOf(spanCtx))
 	}
-
-	span.SetBaggageItem("x-b3-svc", h.serviceName)
-	span.SetBaggageItem("x-b3-op", h.route)
+	defer span.Finish()
 
 	var wg sync.WaitGroup
 	for _, URL := range h.callingURLs {

@@ -42,8 +42,8 @@ var rootCmd = &cobra.Command{
 		}
 
 		logger := svc.Logger
-		tracerFactory.InitFromViper(v, logger)
-		tracer, tracerCloser := tracerFactory.CreateTracer(svc.ServiceName)
+		tracerFactory.InitFromViper(v)
+		tracer, closer := tracerFactory.CreateTracer(svc.ServiceName, logger)
 
 		myApp := app.NewApp(&app.Params{
 			ServiceName: svc.ServiceName,
@@ -59,7 +59,7 @@ var rootCmd = &cobra.Command{
 		svc.RunAndThen(func() {
 			// Do some nothing before completing shutting down.
 			// for example, closing I/O or DB connection, etc.
-			if err := tracerCloser.Close(); err != nil {
+			if err := closer.Close(); err != nil {
 				logger.Error("failed to close tracer", zap.Error(err))
 			}
 		})
@@ -79,7 +79,7 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.microservice-go-template.yaml)")
 
-	tracerFactory = houyi.NewFactory()
+	tracerFactory = houyi.NewTracerFactory()
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
