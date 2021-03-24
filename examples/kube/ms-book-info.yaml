@@ -49,11 +49,8 @@ spec:
           image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5775
-            - containerPort: 5778
-            - containerPort: 6831
-            - containerPort: 6832
-            - containerPort: 14271
+            - containerPort: 22590
+            - containerPort: 14680
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
@@ -118,11 +115,8 @@ spec:
           image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5775
-            - containerPort: 5778
-            - containerPort: 6831
-            - containerPort: 6832
-            - containerPort: 14271
+            - containerPort: 22590
+            - containerPort: 14680
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
@@ -172,11 +166,8 @@ spec:
           image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5775
-            - containerPort: 5778
-            - containerPort: 6831
-            - containerPort: 6832
-            - containerPort: 14271
+            - containerPort: 22590
+            - containerPort: 14680
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
@@ -225,11 +216,8 @@ spec:
           image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5775
-            - containerPort: 5778
-            - containerPort: 6831
-            - containerPort: 6832
-            - containerPort: 14271
+            - containerPort: 22590
+            - containerPort: 14680
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
@@ -296,11 +284,8 @@ spec:
           image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5775
-            - containerPort: 5778
-            - containerPort: 6831
-            - containerPort: 6832
-            - containerPort: 14271
+            - containerPort: 22590
+            - containerPort: 14680
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
@@ -365,11 +350,8 @@ spec:
           image: houyitracing/agent
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5775
-            - containerPort: 5778
-            - containerPort: 6831
-            - containerPort: 6832
-            - containerPort: 14271
+            - containerPort: 22590
+            - containerPort: 14680
         - name: ms-http
           image: houyitracing/ms-http
           imagePullPolicy: IfNotPresent
