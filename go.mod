@@ -8,7 +8,7 @@ require (
 	github.com/gorilla/mux v1.7.4
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.2
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0 // indirect
-	github.com/houyi-tracing/houyi-client-go v1.4.0
+	github.com/houyi-tracing/houyi-client-go v1.5.0
 	github.com/jaegertracing/jaeger v1.22.0
 	github.com/magiconair/properties v1.8.4
 	github.com/mitchellh/go-homedir v1.1.0

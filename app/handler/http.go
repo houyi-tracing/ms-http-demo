@@ -96,6 +96,8 @@ func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 	}
 	defer span.Finish()
 
+	span.SetTag("kind", "server")
+
 	var wg sync.WaitGroup
 	for _, URL := range h.callingURLs {
 		if len(URL) != 0 {
@@ -108,8 +110,13 @@ func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 	wg.Wait()
 }
 
-func (h *httpHandler) mockHttpRequest(span opentracing.Span, URL string, wg *sync.WaitGroup) error {
+func (h *httpHandler) mockHttpRequest(pSpan opentracing.Span, URL string, wg *sync.WaitGroup) error {
 	defer wg.Done()
+
+	span := h.tracer.StartSpan(h.route, opentracing.StartTime(time.Now()), opentracing.FollowsFrom(pSpan.Context()))
+	defer span.Finish()
+
+	span.SetTag("kind", "client")
 
 	req, err := http.NewRequest(http.MethodGet, URL, nil)
 	if err != nil {
@@ -123,14 +130,14 @@ func (h *httpHandler) mockHttpRequest(span opentracing.Span, URL string, wg *syn
 	}
 	resp, err := h.httpClient.Do(req)
 	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	ext.HTTPStatusCode.Set(span, uint16(resp.StatusCode))
-	if resp.StatusCode >= 400 {
 		ext.Error.Set(span, true)
+		return err
+	} else {
+		ext.HTTPStatusCode.Set(span, uint16(resp.StatusCode))
+		if resp.StatusCode >= 400 {
+			ext.Error.Set(span, true)
+		}
+		resp.Body.Close()
+		return nil
 	}
-
-	return nil
 }
