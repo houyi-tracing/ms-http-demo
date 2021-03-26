@@ -98,6 +98,8 @@ func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 
 	span.SetTag("kind", "server")
 
+	time.Sleep(time.Millisecond * 100)
+
 	var wg sync.WaitGroup
 	for _, URL := range h.callingURLs {
 		if len(URL) != 0 {
