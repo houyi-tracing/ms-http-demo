@@ -94,8 +94,6 @@ func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 	} else {
 		span = h.tracer.StartSpan(h.route, opentracing.StartTime(time.Now()), opentracing.ChildOf(spanCtx))
 	}
-	defer span.Finish()
-
 	span.SetTag("kind", "server")
 
 	time.Sleep(time.Millisecond * 100)
@@ -110,15 +108,12 @@ func (h *httpHandler) serveHttp(_ http.ResponseWriter, r *http.Request) {
 		}
 	}
 	wg.Wait()
+
+	span.Finish()
 }
 
-func (h *httpHandler) mockHttpRequest(pSpan opentracing.Span, URL string, wg *sync.WaitGroup) error {
+func (h *httpHandler) mockHttpRequest(span opentracing.Span, URL string, wg *sync.WaitGroup) error {
 	defer wg.Done()
-
-	span := h.tracer.StartSpan(h.route, opentracing.StartTime(time.Now()), opentracing.FollowsFrom(pSpan.Context()))
-	defer span.Finish()
-
-	span.SetTag("kind", "client")
 
 	req, err := http.NewRequest(http.MethodGet, URL, nil)
 	if err != nil {
@@ -127,7 +122,7 @@ func (h *httpHandler) mockHttpRequest(pSpan opentracing.Span, URL string, wg *sy
 
 	// Set some tags on the clientSpan to annotate that it's the client span. The additional HTTP tags are useful for debugging purposes.
 
-	if err := h.tracer.Inject(span.Context(), opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(req.Header)); err != nil {
+	if err = h.tracer.Inject(span.Context(), opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(req.Header)); err != nil {
 		return err
 	}
 	resp, err := h.httpClient.Do(req)
@@ -139,7 +134,6 @@ func (h *httpHandler) mockHttpRequest(pSpan opentracing.Span, URL string, wg *sy
 		if resp.StatusCode >= 400 {
 			ext.Error.Set(span, true)
 		}
-		resp.Body.Close()
-		return nil
+		return resp.Body.Close()
 	}
 }

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-git pull
-
 OS=$1
 ARCH=$2
 
@@ -30,6 +28,7 @@ BUILD_DOCKER=build-docker.sh
 cat <<EOF > ${BUILD_DOCKER}
 #!/bin/bash
 docker build -t houyitracing/ms-http .
+docker push houyitracing/ms-http
 EOF
 chmod u+x ${BUILD_DOCKER}
 mv ${BUILD_DOCKER} ${BUILD_OUT_DIR}/
@@ -44,4 +43,4 @@ ENTRYPOINT ["/opt/ms/${RUN_SHELL}"]
 EOF
 mv Dockerfile ${BUILD_OUT_DIR}/
 
-cp ${WORK_DIR}examples ${BUILD_OUT_DIR}/
+cp -R ${WORK_DIR}examples ${BUILD_OUT_DIR}/
